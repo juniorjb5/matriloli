@@ -1,0 +1,15 @@
+
+
+
+#install.packages("servr") # una vez
+
+
+servr::httw(".")          # sirve la carpeta actual
+
+
+git init
+git add .
+git commit -m "Primer commit sitio Andreina"
+git branch -M main
+git remote add origin https://github.com/juniorjb5/matriloli.git
+git push -u origin main
