@@ -250,40 +250,63 @@
 
   <section id="Itinerario" class="section _4">
     <div class="container _3">
-      <h1 class="heading _2-copy">Itinerario</h1>
+      <h1 class="heading _2-copy">Ubicación</h1>
 
-      <h2 class="heading-2">Jueves 5 de junio</h2>
+      <h2 class="heading-2">CENTRO DE EVENTOS LA RESERVA</h2>
       <img src="images/8.png" loading="lazy" width="63" alt="" class="image">
-      <p class="paragraph">Cocktail de Bienvenida para jóvenes | 8:00pm</p>
-      <p class="paragraph-2">En Bar La Estrella en Casco Antiguo</p>
-      <a href="https://maps.app.goo.gl/EsYZoJKv1xU77YSj9" target="_blank" class="button w-button">VER UBICACIÓN</a>
-      <p class="paragraph _1">dress code | cocktail attire</p>
+      <p class="paragraph">Calle 9 #114, Ciudad Jardín</p>
+      <p class="paragraph">Hora 4:00 p.m.</p>
+      <a href="https://maps.app.goo.gl/ZzC45Za5vcVY41nL7" target="_blank" class="button w-button">VER UBICACIÓN</a>
+      <p class="paragraph _1"> </p>
 
-      <h2 class="heading-2">Viernes 6 de junio</h2>
-      <img src="images/9.png" loading="lazy" width="94" alt="" class="image">
-      <p class="paragraph">Cena de Bienvenida para adultos | 5:00PM</p>
-      <p class="paragraph-2">Residencia de Ricardo Gago Salinero Costa Del este, Edificio Matisse piso 50</p>
-      <a href="https://maps.app.goo.gl/2LoxJNtQWgfWbeTv9" target="_blank" class="button w-button">VER UBICACIÓN</a>
-      <p class="paragraph _1">dress code | cocktail attire</p>
 
-      <h2 class="heading-2">Sábado 7 de junio</h2>
-      <div class="w-layout-grid grid-10">
-        <div class="div-block-19">
-          <img src="images/10.png" loading="lazy" width="94" alt="" class="image">
-          <p class="paragraph">Ceremonia | 6:00pm</p>
-          <p class="paragraph-2"> En la Catedral Basílica <br>Santa María La Antigua </p>
-          <a href="https://maps.app.goo.gl/XB1gVnC3LgFEPc5v5" target="_blank" class="button w-button">VER UBICACIÓN</a>
-        </div>
-        <div class="div-block-19">
-          <img src="images/11.png" loading="lazy" width="100" alt="" class="image">
-          <p class="paragraph">Recepción | 7:00 pm</p>
-          <p class="paragraph-2"> Casa Veranda, <br>Hotel Sheraton</p>
-          <a href="https://maps.app.goo.gl/gNDMLabJ6feHejk5A" target="_blank" class="button w-button">VER UBICACIÓN</a>
-        </div>
-        <div class="div-block-20">
-          <p class="paragraph _1">dress code | black tie</p>
-        </div>
-      </div>
+
+     <h1 class="heading _2-copy">Itinerario</h1>
+
+<h2 class="heading-2">CEREMONIA</h2>
+      <img src="images/10.png" loading="lazy" width="95" alt="" class="image">
+      <br>
+      <p class="paragraph">Hora 4:00 p.m.</p>
+      <p class="paragraph _1"> </p>
+
+
+
+<h2 class="heading-2">COCKTAIL</h2>
+      <img src="images/11.png" loading="lazy" width="95" alt="" class="image">
+      <br>
+      <p class="paragraph">Hora 5:30 p.m.</p>
+      <p class="paragraph _1"> </p>
+
+
+
+<h2 class="heading-2">CENA</h2>
+      <img src="images/9.png" loading="lazy" width="95" alt="" class="image">
+      <br>
+      <p class="paragraph">Hora 7:00 p.m.</p>
+      <p class="paragraph _1"> </p>
+      
+  
+  
+  
+  <h2 class="heading-2">ENTRADA NOVIOS</h2>
+      <img src="images/9.png" loading="lazy" width="95" alt="" class="image">
+      <br>
+      <p class="paragraph">Hora 8:00 p.m.</p>
+      <p class="paragraph _1"> </p>    
+      
+
+
+
+<h2 class="heading-2">FIESTA</h2>
+      <img src="images/9.png" loading="lazy" width="95" alt="" class="image">
+      <br>
+      <p class="paragraph">Hora 8:30 p.m.</p>
+      <p class="paragraph _1"> </p>
+      
+      
+      
+      
+      
 
       <div class="w-layout-grid grid-10 phone">
         <div class="div-block-19">
