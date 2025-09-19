@@ -3,7 +3,7 @@
     "path": "C:/Users/JuniorJ/OneDrive - correounivalle.edu.co/Matri/MatriLoli/index.html",
     "project_path": "index.html",
     "type": "html",
-    "hash": "140921646",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1758233347721.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "430,0",
-        "scrollLine": "392"
+        "cursorPosition": "27,2",
+        "scrollLine": "15"
     },
     "folds": "",
-    "lastKnownWriteTime": 1758233548,
+    "lastKnownWriteTime": 1758240525,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1758233548467,
+    "last_content_update": 1758240525709,
     "read_only": false,
     "read_only_alternatives": []
 }
