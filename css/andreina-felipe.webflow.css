@@ -359,6 +359,29 @@
   background-attachment: fixed;
 }
 
+
+
+/* Fondo a pantalla (similar a tus fotolargas) */
+.fotolarga33{
+  background-image: url('../images/regalo.png?v=2'); /* cache-buster */
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;  /* nota: iOS lo ignora */
+  min-height: 70vh;              /* << necesario: da altura */
+  display: block;
+}
+
+/* En móvil, quita fixed y ajusta altura */
+@media (max-width: 479px){
+  .fotolarga33{
+    background-attachment: scroll; /* iOS no soporta bien fixed */
+    min-height: 50vh;
+    background-position: 50% 30%;
+  }
+}
+
+
 .fotolarga.jo._2-copy-copy {
   background-image: url('../images/17.png');
   background-position: 50%;
