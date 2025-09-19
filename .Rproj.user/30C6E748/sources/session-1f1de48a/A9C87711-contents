@@ -447,6 +447,8 @@
   font-size: 15px;
 }
 
+
+
 .grid-10 {
   grid-template-rows: auto auto;
   width: 60%;
@@ -1107,6 +1109,7 @@
     background-repeat: repeat-y;
     background-size: contain;
   }
+
 
   .section._6 {
     height: auto;

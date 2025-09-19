@@ -222,6 +222,11 @@
     </div>
   </section>
 
+
+
+
+
+
   <section class="section _3">
     <div class="container _1">
       <h1 class="heading _2">¡Falta poco!</h1>
@@ -251,7 +256,9 @@
 
   <section class="fotolarga jo _2"></section>
 
-  <section id="Itinerario" class="section _4">
+
+
+  <section id="Ubicación" class="section _4">
     <div class="container _3">
       <h1 class="heading _2-copy">Ubicación</h1>
 
@@ -264,7 +271,7 @@
 
 
 
-     <h1 class="heading _2-copy">Itinerario</h1>
+     <h1 class="heading _2-copy" class="section _5">Itinerario</h1>
 
 <h2 class="heading-2">CEREMONIA</h2>
       <img src="images/10.png" loading="lazy" width="95" alt="" class="image">
@@ -315,6 +322,34 @@
   </section>
 
   <section class="fotolarga jo _2-copy"></section>
+
+
+
+
+
+ <section id="Vestuario" class="section _5">
+    <div class="container _3">
+      <h1 class="heading _2-copy">Vestuario</h1>
+
+      <img src="images/8.png" loading="lazy" width="63" alt="" class="image">
+      <p class="paragraph">No tenemos ningún código. Elige ese look que te haga sentir increíble y acorde a una ocasión especial.</p>
+<br>
+      <a class="button w-button is-disabled" aria-disabled="true" tabindex="-1">
+  Para ellas: El color blanco y similares son reservados para la novia.
+</a>
+      <p class="paragraph _1"> </p>
+
+
+</section>
+
+
+
+
+<section class="fotolarga jo _2-copy"></section>
+
+
+
+
 
 
 
