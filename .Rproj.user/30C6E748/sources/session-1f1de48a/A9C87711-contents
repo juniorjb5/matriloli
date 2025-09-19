@@ -1499,6 +1499,6 @@
   font-family: "Cormorant Garamond", serif; font-size: 14px; letter-spacing:.5px;
   backdrop-filter: blur(4px); cursor: pointer;
 }
-.music-btn:hover{ background: rgba(0,0,0,.6); }
+.music-btn:hover{ background: rgba(0,0,0,.10); }
 @media (prefers-reduced-motion: reduce){ #wedding-audio{ volume:1 } }
 
