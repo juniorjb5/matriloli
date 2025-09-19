@@ -482,5 +482,151 @@
     clock('js-clock', deadline);
   })();
   </script>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- Música de fondo -->
+<audio id="wedding-audio" src="audio/cancion.mp3" preload="auto" loop playsinline></audio>
+
+<!-- Botón flotante -->
+<button id="music-toggle" aria-label=" " class="music-btn" hidden>
+  ♪
+</button>
+
+<script>
+(function () {
+  const audio = document.getElementById('wedding-audio');
+  const btn   = document.getElementById('music-toggle');
+  const KEY   = 'matriloli-music'; // guarda preferencia
+
+  function setBtn(state) {
+    // state: 'playing' | 'paused'
+    btn.textContent = state === 'playing' ? '⏸️' : '♪';
+    btn.dataset.state = state;
+  }
+
+  async function tryPlay() {
+    try {
+      await audio.play();
+      setBtn('playing');
+      btn.hidden = false;
+      localStorage.setItem(KEY, 'on');
+    } catch (e) {
+      // Bloqueado por autoplay → muestra botón para iniciar
+      setBtn('paused');
+      btn.hidden = false;
+    }
+  }
+
+  // Intento inicial al cargar
+  document.addEventListener('DOMContentLoaded', async () => {
+    const pref = localStorage.getItem(KEY);
+    if (pref === 'off') {
+      setBtn('paused');
+      btn.hidden = false;
+      return;
+    }
+    tryPlay();
+  });
+
+  // Primer toque/click en la página: vuelve a intentar
+  ['click','touchstart'].forEach(evt => {
+    window.addEventListener(evt, function once() {
+      if (audio.paused) tryPlay();
+      window.removeEventListener(evt, once, {once:true});
+    }, {once:true});
+  });
+
+  // Botón play/pause
+  btn.addEventListener('click', async () => {
+    if (audio.paused) {
+      try {
+        await audio.play();
+        setBtn('playing');
+        localStorage.setItem(KEY, 'on');
+      } catch (e) { /* ignorar */ }
+    } else {
+      audio.pause();
+      setBtn('paused');
+      localStorage.setItem(KEY, 'off');
+    }
+  });
+
+  // Si vuelven a la pestaña, intenta retomar
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && !audio.paused && audio.currentTime > 0) {
+      audio.play().catch(()=>{});
+    }
+  });
+})();
+</script>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </body>
 </html>

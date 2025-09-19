@@ -1487,3 +1487,18 @@
   font-style: normal;
   font-display: swap;
 }
+
+
+
+
+
+.music-btn{
+  position: fixed; right: 12px; bottom: 12px; z-index: 9999;
+  padding: 10px 14px; border: 1px solid rgba(255,255,255,.6);
+  background: rgba(0,0,0,.45); color: #fff; border-radius: 999px;
+  font-family: "Cormorant Garamond", serif; font-size: 14px; letter-spacing:.5px;
+  backdrop-filter: blur(4px); cursor: pointer;
+}
+.music-btn:hover{ background: rgba(0,0,0,.6); }
+@media (prefers-reduced-motion: reduce){ #wedding-audio{ volume:1 } }
+
