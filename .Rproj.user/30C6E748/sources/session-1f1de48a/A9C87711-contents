@@ -369,10 +369,11 @@
 
 .heading-2 {
   color: #86796a;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   margin-bottom: 20px;
   font-family: Desirable Bursh Texture, Times New Roman, sans-serif;
-  font-size: 20px;
+  font-size: 17px;
+  text-align: center;
 }
 
 .paragraph {
@@ -1242,12 +1243,12 @@
   }
 
   .heading-2 {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .paragraph {
     text-align: center;
-    font-size: 12px;
+    font-size: 18px;
   }
 
   .paragraph._2 {
