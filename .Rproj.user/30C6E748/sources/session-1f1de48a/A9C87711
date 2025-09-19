@@ -3,7 +3,7 @@
     "path": "C:/Users/JuniorJ/OneDrive - correounivalle.edu.co/Matri/MatriLoli/css/andreina-felipe.webflow.css",
     "project_path": "css/andreina-felipe.webflow.css",
     "type": "css",
-    "hash": "2439729297",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1758241240252.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "1503,0",
-        "scrollLine": "1482"
+        "cursorPosition": "1497,31",
+        "scrollLine": "1483"
     },
     "folds": "",
-    "lastKnownWriteTime": 1758241993,
+    "lastKnownWriteTime": 1758242655,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1758241993902,
+    "last_content_update": 1758242655448,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -97,6 +97,58 @@
   
   
   
+  
+  
+  
+  /* Etiqueta sobre el contador */
+.countdown-label{
+  color: var(--cafe);
+  text-transform: uppercase;
+  letter-spacing: .35em;
+  text-align:center;
+  margin-bottom: 14px;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(14px, 2.6vw, 18px);
+  opacity:.95;
+}
+
+/* Línea sutil decorativa debajo de la etiqueta (opcional) */
+.countdown-label::after{
+  content:"";
+  display:block;
+  width: 120px; height: 1px;
+  margin: 8px auto 0;
+  background: currentColor;
+  opacity:.35;
+}
+
+/* En móvil, un pelín más junta */
+@media (max-width: 480px){
+  .countdown-label{ letter-spacing: .25em; margin-bottom: 10px; }
+}
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </style>
   
   
@@ -172,7 +224,7 @@
 
   <section class="section _3">
     <div class="container _1">
-      <h1 class="heading _2">Let the countdown begin...</h1>
+      <h1 class="heading _2">¡Falta poco!</h1>
       <div id="js-clock" class="js-clock">
         <div class="box">
           <div id="js-clock-days" class="clock-number">00</div>
@@ -448,7 +500,7 @@
   <!-- Countdown -->
   <script>
   (function () {
-    var deadline = '2025/06/07 16:00';
+    var deadline = '2025/12/26 16:00';
     function pad(num, size) { var s = "0" + num; return s.substr(s.length - size); }
     function parseDate(date) {
       var parsed = Date.parse(date);
@@ -518,7 +570,7 @@
 
   function setBtn(state) {
     // state: 'playing' | 'paused'
-    btn.textContent = state === 'playing' ? '⏸️' : '♪';
+    btn.textContent = state === 'playing' ? '︎||' : '♪';
     btn.dataset.state = state;
   }
 
