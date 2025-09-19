@@ -1507,3 +1507,132 @@
 .music-btn:hover{ background: rgba(0,0,0,.10); }
 @media (prefers-reduced-motion: reduce){ #wedding-audio{ volume:1 } }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ====== Sección Mensajes (calza con tu sistema) ====== */
+.section.mensajes{
+  background-image: url('../images/7.png'); /* mismo patrón suave de otras secciones si quieres */
+  background-size: cover;
+  background-position: 50% 100%;
+  padding-top: 8%;
+  padding-bottom: 8%;
+}
+
+.mensajes__inner{
+  max-width: 940px; /* armoniza con .w-container */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mensajes__title{
+  color: var(--cafe);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.mensajes__cover{
+  width: 100%;
+  margin: 0 auto 36px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+.mensajes__cover img{ display:block; width:100%; height:auto; }
+
+/* Mensaje */
+.msg{
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 36px;
+}
+.msg--reverse{
+  grid-template-columns: 1fr 140px;
+}
+.msg--reverse .msg__photo{ order:2; }
+.msg--reverse .msg__body{ order:1; }
+
+.msg__photo{
+  width: 140px; height: 140px;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+}
+.msg__photo img{ width:100%; height:100%; object-fit: cover; display:block; }
+
+.msg__name{
+  color: var(--cafe);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 4px 0 10px;
+  font-family: "The Youngest Serif Display", Times New Roman, sans-serif;
+  font-size: 18px;
+}
+
+.msg__text{
+  color: var(--cafe);
+  letter-spacing: .3px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* Separador discreto */
+.mensajes__divider{
+  display:flex; justify-content:center; margin: 10px 0 26px;
+}
+.mensajes__divider img{ width: 60px; height:auto; opacity:.8; }
+
+/* Responsive */
+@media (max-width: 767px){
+  .msg, .msg--reverse{
+    grid-template-columns: 1fr;
+  }
+  .msg__photo{
+    width: 110px; height:110px; margin: 0 auto;
+  }
+  .msg__body{ text-align: center; }
+  .mensajes__cover{ margin-bottom: 26px; }
+}
+@media (max-width: 479px){
+  .msg__text{ font-size: 15px; line-height: 1.6; }
+  .mensajes__divider img{ width: 50px; }
+}
