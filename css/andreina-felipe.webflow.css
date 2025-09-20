@@ -1732,6 +1732,7 @@
   text-decoration: none;
   box-shadow: 0 6px 16px rgba(0,0,0,.12), inset 0 0 0 1px rgba(255,255,255,.08);
   transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+  text-align: center;
 }
 
 .cta-button:hover{
