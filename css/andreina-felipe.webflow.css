@@ -451,6 +451,7 @@
   margin-bottom: 5%;
   font-family: Arapey, Times New Roman, sans-serif;
   font-style: italic;
+  font-size: 18px;
 }
 
 .paragraph-2._2 {
@@ -1770,4 +1771,108 @@
     font-size: 15px;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* sección contenedora */
+#final-photo.final-photo-blur{
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* capa de fondo (imagen 12) difuminada */
+#final-photo.final-photo-blur::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image: url('../images/12.png'); /* <-- cambia a 'images/12.png' si el CSS está inline */
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(16px) brightness(.9);
+  transform: scale(1.08); /* evita bordes del blur */
+  z-index: 0;             /* queda detrás */
+  pointer-events: none;   /* no bloquea clics */
+}
+
+/* foto principal centrada */
+#final-photo.final-photo-blur .main{
+  position: relative;   /* crea contexto para z-index */
+  z-index: 1;           /* por encima del ::before */
+  display: block;
+  margin: 0 auto;
+  max-height: 100vh;
+  max-width: 92vw;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  border-radius: 8px;   /* opcional */
+}
+
+
+
+
+
+
+@media (max-width: 767px){
+  #final-photo.final-photo-blur::before{
+    filter: blur(10px) brightness(.95);
+    transform: scale(1.04);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
