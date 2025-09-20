@@ -1575,6 +1575,7 @@
   background-size: cover;
   background-position: 50% 0%;
   background-repeat: no-repeat;
+  padding: 5% 10%;
   
 }
 
@@ -1659,3 +1660,113 @@
   .msg__text{ font-size: 15px; line-height: 1.6; }
   .mensajes__divider img{ width: 50px; }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Sección confirmación (armoniza con tu tema) */
+.confirm-section{
+  background-image: url('images/7.png'); /* o quítalo si prefieres plano */
+  background-size: cover;
+  background-position: 50% 0;
+  text-align: center;
+  padding: 5% 10%;
+}
+
+/* Botón principal elegante */
+.cta-button{
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: var(--cafe, #86796a);
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,.12);
+  letter-spacing: .06em;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12), inset 0 0 0 1px rgba(255,255,255,.08);
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+
+.cta-button:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.16), inset 0 0 0 1px rgba(255,255,255,.1);
+  opacity: .98;
+}
+
+.cta-button:active{
+  transform: translateY(0);
+}
+
+.cta-button:focus{
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 5px rgba(134,121,106,.45);
+}
+
+/* (Opcional) enlace secundario minimal */
+.confirm-alt{
+  display:block;
+  margin-top:12px;
+  font-size: 14px;
+  color: var(--cafe);
+  text-decoration: underline;
+  opacity:.85;
+}
+.confirm-alt:hover{ opacity:1; }
+
+/* Responsive */
+@media (max-width: 479px){
+  .cta-button{ 
+    width: 80%;
+    max-width: 320px;
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+}
+
