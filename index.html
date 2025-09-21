@@ -445,6 +445,121 @@
 
 
 
+<section id="galeria" class="section galeria">
+  <div class="galeria__wrap">
+    <button class="fs-nav fs-nav--prev" aria-label="Anterior">‹</button>
+
+    <div class="filmstrip" id="filmstrip">
+      <!-- Repite frames; usa tus rutas y textos -->
+      <figure class="frame">
+        <img src="images/gallery/matri/1.jpeg" alt="">
+        <figcaption>Todo comenzó con una mirada… y aquí seguimos</figcaption>
+      </figure>
+
+      <figure class="frame">
+        <img src="images/gallery/matri/2.jpeg" alt="">
+        <figcaption>Tu mano en la mía, siempre</figcaption>
+      </figure>
+
+      <figure class="frame">
+        <img src="images/gallery/matri/3.jpeg" alt="">
+        <figcaption>Risas que curan cualquier día</figcaption>
+      </figure>
+
+        <figure class="frame">
+        <img src="images/gallery/matri/4.jpeg" alt="">
+        <figcaption>Nuestro lugar favorito: donde estemos juntos</figcaption>
+      </figure>
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/5.jpeg" alt="">
+        <figcaption>Promesas pequeñas, amor gigante</figcaption>
+      </figure>
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/6.jpeg" alt="">
+        <figcaption>La vida sabe mejor si la bailamos</figcaption>
+      </figure>
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/7.jpeg" alt="">
+        <figcaption>Cada abrazo, un hogar</figcaption>
+      </figure>
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/8.jpeg" alt="">
+        <figcaption>El mundo se hace simple contigo</figcaption>
+      </figure>
+      
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/9.jpeg" alt="">
+        <figcaption>Tus ojos: mi sí de todos los días</figcaption>
+      </figure>
+      
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/10.jpeg" alt="">
+        <figcaption>Coleccionando atardeceres y recuerdos</figcaption>
+      </figure>
+      
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/11.jpeg" alt="">
+        <figcaption>La aventura más bella: nosotros</figcaption>
+      </figure>
+      
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/12.jpeg" alt="">
+        <figcaption>Entre risas y besos: somos</figcaption>
+      </figure>
+      
+      
+
+        <figure class="frame">
+        <img src="images/gallery/matri/14.jpeg" alt="">
+        <figcaption>Amor: nuestro idioma favorito</figcaption>
+      </figure>
+      
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/15.jpeg" alt="">
+        <figcaption>Gracias por llegar, por quedarte</figcaption>
+      </figure>
+      
+      
+        <figure class="frame">
+        <img src="images/gallery/matri/16.jpeg" alt="">
+        <figcaption>Este es el comienzo del para siempre</figcaption>
+      </figure>
+      
+      
+        
+      
+    </div>
+
+    <button class="fs-nav fs-nav--next" aria-label="Siguiente">›</button>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section id="final-photo" class="final-photo-blur">
   <img class="main" src="images/3final.png" alt="Foto final">
 </section>
@@ -726,6 +841,26 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <!-- Música de fondo -->
 <audio id="wedding-audio" src="audio/cancion.mp3" preload="auto" loop playsinline></audio>
 
@@ -771,7 +906,7 @@
   });
 
   // Primer toque/click en la página: vuelve a intentar
-  ['click','touchstart'].forEach(evt => {
+  ['scroll','click','touchstart','keydown'].forEach(evt => {
     window.addEventListener(evt, function once() {
       if (audio.paused) tryPlay();
       window.removeEventListener(evt, once, {once:true});
@@ -828,6 +963,39 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+ <script>
+(function(){
+  const strip = document.getElementById('filmstrip');
+  const prev  = document.querySelector('.fs-nav--prev');
+  const next  = document.querySelector('.fs-nav--next');
+
+  // cuánto deslizar por click (casi el ancho visible)
+  function step(){ return Math.round(strip.clientWidth * 0.9); }
+
+  prev.addEventListener('click', () => strip.scrollBy({left: -step(), behavior: 'smooth'}));
+  next.addEventListener('click', () => strip.scrollBy({left:  step(), behavior: 'smooth'}));
+
+  // arrastre con mouse (opcional)
+  let isDown=false, startX=0, scr=0;
+  strip.addEventListener('mousedown', e => { isDown=true; startX=e.pageX; scr=strip.scrollLeft; strip.classList.add('grabbing'); });
+  strip.addEventListener('mouseleave', ()=>{ isDown=false; strip.classList.remove('grabbing'); });
+  strip.addEventListener('mouseup',   ()=>{ isDown=false; strip.classList.remove('grabbing'); });
+  strip.addEventListener('mousemove', e => {
+    if(!isDown) return;
+    e.preventDefault();
+    strip.scrollLeft = scr - (e.pageX - startX);
+  });
+})();
+</script>
+
+
   
   
   
