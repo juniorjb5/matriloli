@@ -172,18 +172,20 @@
       <div class="div-block-16">
         <div class="w-layout-grid grid-9">
           <div id="w-node-_04ff3bc8-7c64-6c51-adf1-04ce8f7f857d-15a70b54" class="div-block-17">
-            <a href="#Inicio" class="nav-link w-nav-link">INICIO</a>
-            <a href="#Itinerario" class="nav-link w-nav-link">ITINERARIO</a>
-            <a href="#Recomendaciones" class="nav-link w-nav-link">HOSPEDAJE</a>
-          </div>
-          <div id="w-node-_04ff3bc8-7c64-6c51-adf1-04ce8f7f8584-15a70b54" class="div-block-18">
-            <img width="74" loading="lazy" alt="" src="images/1.png">
-          </div>
-          <div id="w-node-_04ff3bc8-7c64-6c51-adf1-04ce8f7f8586-15a70b54" class="div-block-17 _1">
-            <a href="#Recom" class="nav-link w-nav-link">RECOMENDACIONES</a>
-            <a href="#Mesa" class="nav-link w-nav-link">MESA DE REGALOS</a>
-            <a href="#Rsvp" class="nav-link _1 w-nav-link">RSVP</a>
-          </div>
+  <a href="#Inicio" class="nav-link w-nav-link">Inicio</a>
+  <a href="#Ubicación" class="nav-link w-nav-link">Ubicación</a>
+  <a href="#Itinerario" class="nav-link w-nav-link">Itinerario</a>
+</div>
+<div id="w-node-_04ff3bc8-7c64-6c51-adf1-04ce8f7f8584-15a70b54" class="div-block-18">
+  <img width="74" loading="lazy" alt="" src="images/1.png">
+</div>
+<div id="w-node-_04ff3bc8-7c64-6c51-adf1-04ce8f7f8586-15a70b54" class="div-block-17 _1">
+  <a href="#Vestuario" class="nav-link w-nav-link">Vestuario</a>
+  <a href="#Mensaje" class="nav-link w-nav-link">Un mensaje para ti</a>
+  <a href="#Confirmacion" class="nav-link w-nav-link">Confirmación</a>
+  <a href="#Preguntas" class="nav-link _1 w-nav-link">Preguntas</a>
+</div>
+
         </div>
         <div class="menu-button-2 w-nav-button">
           <div class="icon-5 w-icon-nav-menu"></div>
@@ -195,13 +197,15 @@
       <div class="container-2 w-container">
         <a href="#" class="brand w-nav-brand"></a>
         <nav role="navigation" class="nav-menu w-nav-menu">
-          <a href="#Inicio" class="nav-link-2 w-nav-link">Inicio</a>
-          <a href="#Itinerario" class="nav-link-2 w-nav-link">Itinerario</a>
-          <a href="#Recomendaciones" class="nav-link-2 w-nav-link">Hosedaje</a>
-          <a href="#Recom" class="nav-link-2 w-nav-link">Recomendaciones</a>
-          <a href="#Mesa" class="nav-link-2 w-nav-link">Mesa de regalos</a>
-          <a href="#Rsvp" class="nav-link-2 w-nav-link">RSVP</a>
-        </nav>
+  <a href="#Inicio" class="nav-link-2 w-nav-link">Inicio</a>
+  <a href="#Ubicación" class="nav-link-2 w-nav-link">Ubicación</a>
+  <a href="#Itinerario" class="nav-link-2 w-nav-link">Itinerario</a>
+  <a href="#Vestuario" class="nav-link-2 w-nav-link">Vestuario</a>
+  <a href="#Mensaje" class="nav-link-2 w-nav-link">Un mensaje para ti</a>
+  <a href="#Confirmacion" class="nav-link-2 w-nav-link">Confirmación</a>
+  <a href="#Preguntas" class="nav-link-2 w-nav-link">Preguntas</a>
+</nav>
+
         <div class="menu-button-3 w-nav-button">
           <div class="icon-6 w-icon-nav-menu"></div>
         </div>
@@ -271,7 +275,9 @@
 
 
 
-     <h1 class="heading _2-copy" class="section _5">Itinerario</h1>
+     <span id="Itinerario"></span>
+<h1 class="heading _2-copy" class="section _5">Itinerario</h1>
+
 
 <h2 class="heading-2">CEREMONIA</h2>
       <img src="images/10.png" loading="lazy" width="95" alt="" class="image">
@@ -343,7 +349,9 @@
 
 
 
+<span id="Mensaje"></span>
 <h1 class="heading _2-copy mensajes__title">Un mensaje para ti</h1>
+
 
     <!-- Portada de la sección -->
     <div class="mensajes__cover">
@@ -418,7 +426,9 @@
 
 
 
+<span id="Confirmacion"></span>
 <h1 class="heading _2-copy">Confirmación de asistencia</h1>
+
 
         <p class="paragraph-2 _1">
       Por favor, confirma antes del <strong>15 de noviembre de 2025</strong>.
@@ -572,7 +582,9 @@
 
 <section id="FAQ">
   <div class="container _3">
-    <h1 class="heading _2-copy">Preguntas frecuentes</h1>
+    <span id="Preguntas"></span>
+<h1 class="heading _2-copy">Preguntas frecuentes</h1>
+
   
 
     
@@ -931,7 +943,7 @@
     const nearEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 10;
     strip.scrollTo({ left: nearEnd ? 0 : strip.scrollLeft + dx, behavior: 'smooth' });
   }
-  function start(){ auto = setInterval(step, 3000); }
+  function start(){ auto = setInterval(step, 3500); }
   function stop(){ clearInterval(auto); auto = null; }
 
   // Pausa temporal si el usuario interactúa
