@@ -1808,55 +1808,30 @@
 
 
 
-
-/* sección contenedora */
+/* Sección con fondo 12.png */
 #final-photo.final-photo-blur{
   position: relative;
   min-height: 100vh;
+  padding: 40px 0;                 /* un respiro arriba/abajo */
   overflow: hidden;
-  padding: 0;
+  background: url('../images/12.png') 50% 100% / cover no-repeat; /* textura visible */
 }
 
-/* capa de fondo (imagen 12) difuminada */
-#final-photo.final-photo-blur::before{
-  content:"";
-  position:absolute; inset:0;
-  background-image: url('../images/12.png'); /* <-- cambia a 'images/12.png' si el CSS está inline */
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  filter: blur(16px) brightness(.9);
-  transform: scale(1.08); /* evita bordes del blur */
-  z-index: 0;             /* queda detrás */
-  pointer-events: none;   /* no bloquea clics */
-}
-
-/* foto principal centrada */
+/* Foto principal centrada y sin fondo adicional */
 #final-photo.final-photo-blur .main{
-  position: relative;   /* crea contexto para z-index */
-  z-index: 1;           /* por encima del ::before */
   display: block;
   margin: 0 auto;
-  max-height: 100vh;
+  max-height: 90vh;
   max-width: 92vw;
   width: auto;
   height: auto;
   object-fit: contain;
   box-shadow: 0 8px 24px rgba(0,0,0,.15);
-  border-radius: 8px;   /* opcional */
+  border-radius: 8px;
+  background: none; /* por si algún estilo anterior la estaba pintando */
 }
 
 
-
-
-
-
-@media (max-width: 767px){
-  #final-photo.final-photo-blur::before{
-    filter: blur(10px) brightness(.95);
-    transform: scale(1.04);
-  }
-}
 
 
 
