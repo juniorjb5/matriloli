@@ -1862,86 +1862,75 @@
 
 
 
-/* ===== Galería tipo filmstrip (sin recortes) ===== */
-.section.galeria{
-  padding-top: 6%;
-  padding-bottom: 6%;
-}
-
-.galeria__wrap{
-  position: relative;
-  max-width: 980px;
-  margin: 0 auto;
+/* ===== Galería full-bleed, fotos sin recorte ===== */
+.section.galeria.galeria--fullbleed{
+  padding: 0;                 /* anula padding de .section */
 }
 
 .filmstrip{
+  width: 100vw;               /* ocupa todo el ancho de la ventana */
+  margin-left: 50%;
+  transform: translateX(-50%);/* truco para que realmente sea full-bleed aunque el padre tenga width */
   display: flex;
-  gap: 18px;
+  gap: 0;                     /* SIN separación entre fotos */
   overflow-x: auto;
-  padding: 10px 54px;               /* deja espacio para flechas */
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 54px;
   -webkit-overflow-scrolling: touch;
+  background: #000;           /* da marco negro si la foto no llena el alto */
 }
 
 .frame{
+  flex: 0 0 auto;             /* no se encoge */
+  scroll-snap-align: center;  /* se “engancha” al centro al parar */
   position: relative;
-  flex: 0 0 auto;
-  scroll-snap-align: center;
-  border-radius: 12px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.12);
-  background: #000;
 }
 
-/* La clave: no recortar; mostrar foto completa */
 .frame img{
   display: block;
-  height: 65vh;          /* controla alto del carrusel */
-  width: auto;           /* mantiene proporción */
-  object-fit: contain;   /* NADA de recortes */
-  border-radius: 12px;
+  height: 70vh;               /* controla la ALTURA del carrusel en desktop */
+  width: auto;                /* mantiene proporción, sin recortar */
+  object-fit: contain;        /* clave: NO recorta */
 }
 
-/* Leyenda elegante encima */
+/* Texto sobre la foto (opcional) */
 .frame figcaption{
   position: absolute; left: 0; right: 0; bottom: 0;
-  padding: 22px 20px 16px;
+  padding: 26px 22px 18px;
   text-align: center;
   color: #fff;
   font-family: "Cormorant Garamond", serif;
-  font-size: 18px; letter-spacing: .2px;
+  font-size: 22px;
   background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0));
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
 }
 
-/* Flechas */
-.fs-nav{
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 38px; height: 38px; border-radius: 999px;
-  border: 0; color: #fff; background: rgba(0,0,0,.35);
-  display: grid; place-items: center;
-  font-size: 26px; line-height: 1; cursor: pointer;
-  backdrop-filter: blur(2px);
+/* Puntitos */
+.fs-dots{
+  position: absolute; left: 50%; transform: translateX(-50%);
+  bottom: 14px;
+  display: flex; gap: 8px;
+  pointer-events: none;
 }
-.fs-nav:hover{ background: rgba(0,0,0,.52); }
+.fs-dots .dot{
+  width: 7px; height: 7px; border-radius: 999px;
+  background: rgba(255,255,255,.45);
+  transition: transform .25s ease, background-color .25s ease;
+}
+.fs-dots .dot.is-active{
+  background: rgba(255,255,255,.95);
+  transform: scale(1.35);
+}
 
-.fs-nav--prev{ left: 10px; }
-.fs-nav--next{ right: 10px; }
-
-/* Responsive */
 @media (max-width: 991px){
-  .frame img{ height: 58vh; }
+  .frame img{ height: 60vh; }
+  .frame figcaption{ font-size: 18px; padding: 20px 16px 14px; }
 }
 @media (max-width: 767px){
-  .galeria__wrap{ max-width: 100%; }
-  .filmstrip{ gap: 14px; padding-inline: 44px; scroll-padding-inline: 44px; }
-  .frame img{ height: 48vh; }
-  .frame figcaption{ font-size: 16px; }
+  .frame img{ height: 52vh; }
 }
 @media (max-width: 479px){
-  .frame img{ height: 42vh; }
-  .frame figcaption{ font-size: 15px; padding: 16px 14px 12px; }
+  .frame img{ height: 46vh; }
+  .frame figcaption{ font-size: 16px; }
 }
 
 

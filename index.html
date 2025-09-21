@@ -445,11 +445,10 @@
 
 
 
-<section id="galeria" class="section galeria">
-  <div class="galeria__wrap">
-    <button class="fs-nav fs-nav--prev" aria-label="Anterior">‹</button>
-
-    <div class="filmstrip" id="filmstrip">
+<section id="galeria" class="section galeria galeria--fullbleed">
+  <div class="filmstrip" id="filmstrip">
+    
+    
       <!-- Repite frames; usa tus rutas y textos -->
       <figure class="frame">
         <img src="images/gallery/matri/1.jpeg" alt="">
@@ -539,8 +538,8 @@
       
     </div>
 
-    <button class="fs-nav fs-nav--next" aria-label="Siguiente">›</button>
-  </div>
+  <!-- Puntitos -->
+  <div class="fs-dots" id="fs-dots" aria-hidden="true"></div>
 </section>
 
 
@@ -973,27 +972,56 @@
  <script>
 (function(){
   const strip = document.getElementById('filmstrip');
-  const prev  = document.querySelector('.fs-nav--prev');
-  const next  = document.querySelector('.fs-nav--next');
+  const dotsWrap = document.getElementById('fs-dots');
+  const frames = Array.from(strip.querySelectorAll('.frame'));
 
-  // cuánto deslizar por click (casi el ancho visible)
-  function step(){ return Math.round(strip.clientWidth * 0.9); }
-
-  prev.addEventListener('click', () => strip.scrollBy({left: -step(), behavior: 'smooth'}));
-  next.addEventListener('click', () => strip.scrollBy({left:  step(), behavior: 'smooth'}));
-
-  // arrastre con mouse (opcional)
-  let isDown=false, startX=0, scr=0;
-  strip.addEventListener('mousedown', e => { isDown=true; startX=e.pageX; scr=strip.scrollLeft; strip.classList.add('grabbing'); });
-  strip.addEventListener('mouseleave', ()=>{ isDown=false; strip.classList.remove('grabbing'); });
-  strip.addEventListener('mouseup',   ()=>{ isDown=false; strip.classList.remove('grabbing'); });
-  strip.addEventListener('mousemove', e => {
-    if(!isDown) return;
-    e.preventDefault();
-    strip.scrollLeft = scr - (e.pageX - startX);
+  // Crea puntitos
+  frames.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'dot' + (i===0 ? ' is-active' : '');
+    dotsWrap.appendChild(d);
   });
+  const dots = Array.from(dotsWrap.children);
+
+  // Observa qué frame está centrado para activar dot
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = frames.indexOf(e.target);
+        dots.forEach(d => d.classList.remove('is-active'));
+        if (dots[idx]) dots[idx].classList.add('is-active');
+      }
+    });
+  }, { root: strip, threshold: 0.6 }); // 60% visible ≈ activo
+  frames.forEach(f => io.observe(f));
+
+  // Autoplay suave
+  let auto = null, paused = false;
+  function step(){
+    if (paused) return;
+    // desplaza a la siguiente “pantalla” (ancho visible * 0.95)
+    const dx = Math.round(strip.clientWidth * 0.95);
+    // si estamos casi al final, vuelve al inicio
+    const nearEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 10;
+    strip.scrollTo({ left: nearEnd ? 0 : strip.scrollLeft + dx, behavior: 'smooth' });
+  }
+  function start(){ auto = setInterval(step, 3500); }
+  function stop(){ clearInterval(auto); auto = null; }
+
+  // Pausa temporal si el usuario interactúa
+  ['touchstart','mousedown','wheel','keydown'].forEach(evt => {
+    strip.addEventListener(evt, () => {
+      paused = true; stop();
+      clearTimeout(strip._resume);
+      strip._resume = setTimeout(() => { paused = false; start(); }, 3000);
+    }, { passive: true });
+  });
+
+  // Inicia
+  start();
 })();
 </script>
+
 
 
   
