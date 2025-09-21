@@ -1824,7 +1824,7 @@
   min-height: 100vh;
   padding: 40px 0;                 /* un respiro arriba/abajo */
   overflow: hidden;
-  background: url('../images/18.png') 50% 100% / cover no-repeat; /* textura visible */
+  /*background: url('../images/18.png') 50% 100% / cover no-repeat;  textura visible */
 }
 
 /* Foto principal centrada y sin fondo adicional */
@@ -1888,7 +1888,7 @@
 
 .frame img{
   display: block;
-  height: 70vh;               /* controla la ALTURA del carrusel en desktop */
+  height: 90vh;               /* controla la ALTURA del carrusel en desktop */
   width: auto;                /* mantiene proporción, sin recortar */
   object-fit: contain;        /* clave: NO recorta */
 }
@@ -1934,6 +1934,118 @@
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== Acordeón genérico (Hoteles + FAQ) ===== */
+.faq-list{
+  max-width: 940px;      /* armoniza con tu .w-container */
+  margin: 0 auto;
+  text-align: left;
+}
+
+details.faq-item{
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 12px;
+  padding: .85rem 1rem;
+  background: rgba(0,0,0,.02);
+  margin-bottom: .75rem;
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+details.faq-item[open]{
+  background: rgba(0,0,0,.03);
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  border-color: rgba(0,0,0,.12);
+}
+
+summary.faq-q{
+  cursor: pointer;
+  list-style: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 18px;
+  color: var(--cafe, #6a5747);
+}
+
+/* Icono + / − */
+summary.faq-q::-webkit-details-marker{ display: none; }
+summary.faq-q::before{
+  content:"+";
+  display:inline-grid; place-items:center;
+  width:22px; height:22px; border-radius:999px;
+  border:1px solid rgba(0,0,0,.25);
+  font-weight:700; line-height:1;
+  color: rgba(0,0,0,.65);
+  flex: 0 0 22px;
+}
+details[open] > summary.faq-q::before{ content:"−"; }
+
+/* Cuerpo */
+.faq-a{
+  margin-top: .6rem;
+  color: #444;
+  font-family: "Cormorant Garamond", serif;
+  line-height: 1.55;
+}
+.faq-a a.link{
+  color: var(--cafe, #6a5747);
+  text-decoration: underline;
+}
+
+/* Subtítulo “HOTELES” con tu estilo */
+.paragraph._2.section-subtitle{
+  text-align:center;
+  letter-spacing:.12em;
+  margin: 10px 0 18px;
+}
 
 
 
