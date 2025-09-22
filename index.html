@@ -544,11 +544,14 @@
       </figure>
       
       
-        
+        <div class="fs-dots" id="fs-dots" aria-hidden="true"></div>
       
     </div>
 
   <!-- Puntitos -->
+  
+  
+  
   
 </section>
 
@@ -643,6 +646,9 @@
       
     </div>
   </div>
+  
+   
+  
 </section>
 
 
@@ -965,6 +971,56 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('.navbar-2.phone.w-nav');
+  if (!nav) return;
+  const btn = nav.querySelector('.w-nav-button');
+  const menu = nav.querySelector('.w-nav-menu');
+  if (!btn || !menu) return;
+
+  // Toggle
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    menu.classList.toggle('w--open');
+    btn.classList.toggle('w--open');
+    document.body.classList.toggle('w--nav-menu-open');
+  });
+
+  // Cerrar al hacer click en un link
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.remove('w--open');
+      btn.classList.remove('w--open');
+      document.body.classList.remove('w--nav-menu-open');
+    });
+  });
+
+  // Cerrar al redimensionar (si pasan a desktop)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 991) {
+      menu.classList.remove('w--open');
+      btn.classList.remove('w--open');
+      document.body.classList.remove('w--nav-menu-open');
+    }
+  });
+});
+</script>
+
   
   
   

@@ -1886,12 +1886,16 @@
   position: relative;
 }
 
+
+
 .frame img{
   display: block;
   height: 90vh;               /* controla la ALTURA del carrusel en desktop */
   width: auto;                /* mantiene proporción, sin recortar */
   object-fit: contain;        /* clave: NO recorta */
 }
+
+
 
 /* Texto sobre la foto (opcional) */
 .frame figcaption{
@@ -2052,6 +2056,42 @@ details[open] > summary.faq-q::before{ content:"−"; }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Solo afecta al navbar móvil */
+@media (max-width: 991px){
+  .navbar-2 .w-nav-button{ display:block; cursor:pointer; }
+  .navbar-2 .w-nav-menu{ display:none; position:absolute; top:100%; left:0; right:0; z-index:9999; background:#fff; padding:12px 16px; }
+  .navbar-2 .w-nav-menu.w--open{ display:block; }
+  .navbar-2 .w-nav-menu .w-nav-link{ display:block; padding:10px 0; }
+  /* opcional: impedir scroll del body cuando el menú esté abierto */
+  body.w--nav-menu-open{ overflow:hidden; }
+}
 
 
 
