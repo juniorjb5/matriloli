@@ -216,20 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  function toUrlEncoded(form){
-  const fd = new FormData(form);
-  if(!fd.has('form-name')) fd.append('form-name', form.getAttribute('name') || 'rsvp');
-  return new URLSearchParams(fd).toString();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('rsvpForm');
-  if(!form) return;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // <- clave: prevenimos el POST “normal”
-
-    // Validación visual (igual que antes)
+  form.addEventListener('submit', (e) => {
+    // Validación visual
     let firstMissing = null;
     document.querySelectorAll('#personas fieldset.person').forEach((fs) => {
       const checked = fs.querySelector('input[type="radio"]:checked');
@@ -238,42 +226,41 @@ document.addEventListener('DOMContentLoaded', () => {
       else{ if(err) err.style.display = 'none'; }
     });
     if(firstMissing){
+      e.preventDefault();
       firstMissing.scrollIntoView({behavior:'smooth', block:'center'});
       return;
     }
 
-    // Elimina sintéticos y crea los campos dinámicos
+    // Elimina sintéticos previos
     form.querySelectorAll('.synth-field').forEach(n => n.remove());
+
+    // 1) columnas asiste_i (para que salgan en el dashboard)
+    // 2) JSON "asistentes" (fuente de la verdad)
     const asistentes = [];
+    
+    
     document.querySelectorAll('#personas fieldset.person').forEach((fs, i) => {
       const nombre = (fs.querySelector('legend')?.textContent || `Invitado ${i+1}`).trim();
-      const asiste = (fs.querySelector('input[type="radio"]:checked')?.value) || 'NO';
+      const marcado = fs.querySelector('input[type="radio"]:checked');
+      const asiste = marcado ? marcado.value : 'NO';
 
       const h = document.createElement('input');
-      h.type = 'hidden'; h.name = `asiste_${i}`; h.value = `${nombre}|${asiste}`;
-      h.className = 'synth-field'; form.appendChild(h);
+      h.type = 'hidden';
+      h.name = `asiste_${i}`;
+      h.value = `${nombre}|${asiste}`;
+      h.className = 'synth-field';
+      form.appendChild(h);
 
       asistentes.push({ nombre, asiste });
     });
-    const jsonField = document.createElement('textarea');
-    jsonField.name = 'asistentes'; jsonField.className = 'synth-field';
-    jsonField.style.display = 'none'; jsonField.value = JSON.stringify(asistentes);
-    form.appendChild(jsonField);
 
-    // Envío a Netlify por AJAX y redirección manual a /gracias/
-    try{
-      await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: toUrlEncoded(form)
-      });
-      window.location.href = new URL('./gracias/', window.location.href).pathname;
-    }catch(err){
-      alert('No pudimos enviar tu confirmación. Intenta de nuevo por favor.');
-      console.error(err);
-    }
+    const jsonField = document.createElement('textarea');
+    jsonField.name = 'asistentes';
+    jsonField.className = 'synth-field';
+    jsonField.style.display = 'none';
+    jsonField.value = JSON.stringify(asistentes);
+    form.appendChild(jsonField);
   });
-});
 });
 
 
