@@ -39,7 +39,7 @@
   
   
  <!-- DETECTOR NETLIFY (arriba del todo, oculto) -->
-<form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden>
+<form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" action="/gracias/" hidden>
   <input type="hidden" name="form-name" value="rsvp">
   <!-- 1º campo = título que mostrará Netlify -->
   <input type="text"   name="subject">
@@ -89,7 +89,7 @@
 
     <!-- FORM RSVP (Netlify Forms) -->
     <div id="formBox" class="rsvp-wrap" style="display:none;">
-      <form id="rsvpForm" name="rsvp" method="POST" action="gracias/">
+      <form id="rsvpForm" name="rsvp" method="POST" action="/gracias/">
   <input type="hidden" name="form-name" value="rsvp">
   <input type="hidden" name="subject" id="subjectField">
   <input type="hidden" name="name"    id="titleField">
