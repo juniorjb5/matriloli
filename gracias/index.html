@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>¡Gracias por confirmar!</title>
+
+  <!-- Tus estilos principales -->
+  <link href="/andreina/css/normalize.css" rel="stylesheet">
+  <link href="/andreina/css/webflow.css" rel="stylesheet">
+  <link href="/andreina/css/andreina-felipe.webflow.css" rel="stylesheet">
+  <link href="/andreina/css/main.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      background: url('/images/12.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #86796a;
+      text-align: center;
+    }
+
+    .thankyou-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 5% 10%;
+     
+    }
+
+    .thankyou-title {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      font-family: "The Youngest Serif Display", Times New Roman, serif;
+      color: var(--cafe, #86796a);
+    }
+
+    .thankyou-text {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #6a5747;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 999px;
+      background: var(--cafe, #86796a);
+      color: #fff !important;
+      border: none;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 16px;
+      text-decoration: none;
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.16);
+      opacity: .95;
+    }
+  </style>
+</head>
+<body>
+  <section class="thankyou-section">
+    <h1 class="thankyou-title">¡Gracias por confirmar!</h1>
+    <p class="thankyou-text">Tu respuesta quedó registrada con éxito.<br>
+    Estamos felices de compartir este día contigo.</p>
+    <a href="/" class="cta-button">Volver al inicio</a>
+  </section>
+</body>
+</html>
