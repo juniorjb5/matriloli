@@ -89,7 +89,7 @@
 
     <!-- FORM RSVP (Netlify Forms) -->
     <div id="formBox" class="rsvp-wrap" style="display:none;">
-      <form id="rsvpForm" name="rsvp" method="POST" action="gracias/index.html">
+      <form id="rsvpForm" name="rsvp" method="POST" action="gracias/">
   <input type="hidden" name="form-name" value="rsvp">
   <input type="hidden" name="subject" id="subjectField">
   <input type="hidden" name="name"    id="titleField">
@@ -101,7 +101,7 @@
   
 
 <!-- Código de invitación -->
-  <input type="hidden" name="codigo" id="codigoHidden">
+  
 
   <h2 class="heading _2-copy" id="titulo">Invitación</h2>
   <div id="personas"></div>
@@ -209,6 +209,7 @@ function renderForm(codigo, registro){
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('rsvpForm');
+  form.setAttribute('action', new URL('./gracias/', location.href).pathname);
   if(!form) return;
 
   form.addEventListener('submit', (e) => {
