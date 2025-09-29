@@ -29,7 +29,50 @@
     .note{ width:100%; min-height:90px; border:1px solid rgba(0,0,0,.12); border-radius:10px; padding:10px; font-family:"Cormorant Garamond", serif; }
   </style>
 </head>
+
+
+
 <body>
+  
+  
+  
+  
+  
+ <!-- DETECTOR NETLIFY (arriba del todo, oculto) -->
+<form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="rsvp">
+  <!-- 1º campo = título que mostrará Netlify -->
+  <input type="text"   name="subject">
+  <input type="text"   name="name">
+  <input type="text"   name="codigo">
+  <textarea name="comentarios"></textarea>
+  <!-- JSON con todos los invitados -->
+  <textarea name="asistentes"></textarea>
+  <!-- Placeholders para que el dashboard muestre columnas -->
+  <input type="text" name="asiste_0">
+  <input type="text" name="asiste_1">
+  <input type="text" name="asiste_2">
+  <input type="text" name="asiste_3">
+  <input type="text" name="asiste_4">
+  <input type="text" name="asiste_5">
+  <input type="text" name="asiste_6">
+  <input type="text" name="asiste_7">
+  <input type="text" name="asiste_8">
+  <input type="text" name="asiste_9">
+</form>
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 <section class="section _5">
   <div class="container _3">
@@ -46,18 +89,16 @@
 
     <!-- FORM RSVP (Netlify Forms) -->
     <div id="formBox" class="rsvp-wrap" style="display:none;">
-      <form id="rsvpForm"
-      name="rsvp"
-      method="POST"
-      netlify
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/gracias/">
-
-  <!-- Clave para Netlify -->
+      <form id="rsvpForm" name="rsvp" method="POST" action="/gracias/">
   <input type="hidden" name="form-name" value="rsvp">
-  <input type="hidden" name="name" id="titleField"> <!-- <- ESTE define el “título” en Netlify -->
+  <input type="hidden" name="subject" id="subjectField">
+  <input type="hidden" name="name"    id="titleField">
+  <input type="hidden" name="codigo"  id="codigoHidden">
   <p style="display:none"><label>No completar: <input name="bot-field"></label></p>
+  
+  
+  
+  
 
 <!-- Código de invitación -->
   <input type="hidden" name="codigo" id="codigoHidden">
@@ -80,7 +121,27 @@
   </div>
 </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
+
+
+
 
 
 
@@ -107,13 +168,27 @@ async function loadInvitados(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 function renderForm(codigo, registro){
   document.getElementById('gate').style.display = 'none';
   const box = document.getElementById('formBox'); box.style.display = 'block';
 
   document.getElementById('titulo').textContent = `Invitación ${codigo}`;
   document.getElementById('codigoHidden').value = codigo;
-  document.getElementById('titleField').value = `Invitación ${codigo}`; // <- NUEVO
+
+  // Forzar título en Netlify
+  document.getElementById('subjectField').value = `Invitación ${codigo}`;
+  document.getElementById('titleField').value   = `Invitación ${codigo}`;
 
   const cont = document.getElementById('personas');
   cont.innerHTML = '';
@@ -122,8 +197,8 @@ function renderForm(codigo, registro){
     wrap.className = 'person';
     wrap.innerHTML = `
       <legend>${nom}</legend>
-      <label><input type="radio" name="asiste_${i}" value="${nom}|SI" required> Asiste</label>
-      <label><input type="radio" name="asiste_${i}" value="${nom}|NO"> No asiste</label>
+      <label><input type="radio" name="asiste_${i}_radio" value="SI" required> Asiste</label>
+      <label><input type="radio" name="asiste_${i}_radio" value="NO"> No asiste</label>
       <div class="person-error" aria-live="polite" style="display:none; color:#9b3b3b; margin-top:6px; font-family:'Cormorant Garamond', serif;">
         Debes seleccionar una opción.
       </div>
@@ -132,19 +207,12 @@ function renderForm(codigo, registro){
   });
 }
 
-
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('rsvpForm');
   if(!form) return;
 
   form.addEventListener('submit', (e) => {
-    // Validación visual (como ya la tenías)
+    // Validación visual
     let firstMissing = null;
     document.querySelectorAll('#personas fieldset.person').forEach((fs) => {
       const checked = fs.querySelector('input[type="radio"]:checked');
@@ -155,27 +223,45 @@ document.addEventListener('DOMContentLoaded', () => {
     if(firstMissing){
       e.preventDefault();
       firstMissing.scrollIntoView({behavior:'smooth', block:'center'});
-      firstMissing.style.boxShadow = '0 0 0 2px rgba(155,59,59,.25)';
-      setTimeout(()=> firstMissing.style.boxShadow = '', 1200);
       return;
     }
 
-    // Limpia sintéticos previos
-    form.querySelectorAll('input.synth-field').forEach(n => n.remove());
+    // Elimina sintéticos previos
+    form.querySelectorAll('.synth-field').forEach(n => n.remove());
 
-    // Crea un hidden por cada persona con el valor elegido (SI/NO)
+    // 1) columnas asiste_i (para que salgan en el dashboard)
+    // 2) JSON "asistentes" (fuente de la verdad)
+    const asistentes = [];
     document.querySelectorAll('#personas fieldset.person').forEach((fs, i) => {
       const nombre = (fs.querySelector('legend')?.textContent || `Invitado ${i+1}`).trim();
       const marcado = fs.querySelector('input[type="radio"]:checked');
-      const hidden = document.createElement('input');
-      hidden.type = 'hidden';
-      hidden.name = `asiste_${i}`;
-      hidden.value = `${nombre}|${marcado.value.endsWith('SI') ? 'SI' : 'NO'}`;
-      hidden.className = 'synth-field';
-      form.appendChild(hidden);
+      const asiste = marcado ? marcado.value : 'NO';
+
+      const h = document.createElement('input');
+      h.type = 'hidden';
+      h.name = `asiste_${i}`;
+      h.value = `${nombre}|${asiste}`;
+      h.className = 'synth-field';
+      form.appendChild(h);
+
+      asistentes.push({ nombre, asiste });
     });
+
+    const jsonField = document.createElement('textarea');
+    jsonField.name = 'asistentes';
+    jsonField.className = 'synth-field';
+    jsonField.style.display = 'none';
+    jsonField.value = JSON.stringify(asistentes);
+    form.appendChild(jsonField);
   });
 });
+
+
+
+
+
+
+
 
 
 
@@ -214,27 +300,6 @@ document.getElementById('codigoInput').addEventListener('keydown', e=>{
 
 
 
-
-
-
-<!-- Formulario oculto para que Netlify detecte los campos -->
-<form name="rsvp" netlify data-netlify="true" hidden>
-  <input type="hidden" name="form-name" value="rsvp">
-  <input type="text" name="name">
-  <input type="text" name="codigo">
-  <input type="text" name="comentarios">
-  <!-- placeholders para detección -->
-  <input type="text" name="asiste_0">
-  <input type="text" name="asiste_1">
-  <input type="text" name="asiste_2">
-  <input type="text" name="asiste_3">
-  <input type="text" name="asiste_4">
-  <input type="text" name="asiste_5">
-  <input type="text" name="asiste_6">
-  <input type="text" name="asiste_7">
-  <input type="text" name="asiste_8">
-  <input type="text" name="asiste_9">
-</form>
 
 
 
