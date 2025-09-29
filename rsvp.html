@@ -40,10 +40,7 @@
     <div id="gate" class="gate-card">
       <input id="codigoInput" class="gate-input" placeholder="Ej: OO-026" autocomplete="one-time-code" />
       <p class="hint">El código está impreso en tu invitación.</p>
-      <button id="validarBtn" type="button" class="w-button cta-button" style="margin-top:16px;">
-  Validar código
-</button>
-
+      <a id="validarBtn" class="w-button cta-button" style="margin-top:16px; display:inline-block; cursor:pointer;" role="button">Validar código</a>
       <div id="msg" class="err" role="alert" aria-live="polite"></div>
     </div>
 
@@ -84,12 +81,25 @@
 </section>
 
 <script>
-let invitadosCache = null;
 
-// Carga el JSON de invitados (ajusta la ruta si lo pones en /images/)
+
+
+// --- Ruta robusta para invitados.json ---
+function invitadosPath(){
+  // Si tu sitio está bajo /andreina/, pon el archivo en /andreina/invitados.json
+  // y usa ruta relativa. Esto funciona tanto en raíz como en subcarpetas.
+  return new URL('./invitados.json', window.location.href).href;
+}
+
+
+
+let invitadosCache = null;
 async function loadInvitados(){
   if(!invitadosCache){
-    invitadosCache = await fetch('/invitados.json', {cache:'no-store'}).then(r=>r.json());
+    const url = invitadosPath();
+    const res = await fetch(url, {cache:'no-store'});
+    if(!res.ok) throw new Error(`No se pudo cargar invitados.json (${res.status})`);
+    invitadosCache = await res.json();
   }
   return invitadosCache;
 }
@@ -128,7 +138,7 @@ function renderForm(codigo, registro){
 
 
 
-<script>
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('rsvpForm');
   if(!form) return;
@@ -166,55 +176,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-</script>
 
 
 
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const validarBtn = document.getElementById('validarBtn');
-  const codigoInput = document.getElementById('codigoInput');
-  const msg = document.getElementById('msg');
 
-  if (!validarBtn || !codigoInput) return; // por si algo no está en el DOM
 
-  validarBtn.addEventListener('click', async (ev) => {
-    ev.preventDefault();           // por si el navegador intenta navegar
-    msg.textContent = '';
 
-    try{
-      const code = codigoInput.value.trim().toUpperCase();
-      if(!code){ msg.textContent = 'Por favor, ingresa tu código.'; return; }
+document.getElementById('validarBtn').addEventListener('click', async (ev)=>{
+  ev.preventDefault(); // por si es <a>
+  const msgEl = document.getElementById('msg'); 
+  msgEl.textContent = '';
 
-      const data = await loadInvitados();  // usa tu misma función
-      const registro = data[code];
+  const codeInput = document.getElementById('codigoInput');
+  const code = codeInput.value.trim().toUpperCase();
+  if(!code){ msgEl.textContent = 'Por favor, ingresa tu código.'; return; }
 
-      if(!registro){
-        msg.textContent = 'Código no válido. Revisa tu invitación o escríbenos.';
-        return;
-      }
-
-      renderForm(code, registro);
-    }catch(err){
-      console.error(err);
-      msg.textContent = 'Hubo un problema validando el código. Intenta de nuevo.';
-    }
-  });
-
-  // Enter valida
-  codigoInput.addEventListener('keydown', (e)=>{
-    if(e.key === 'Enter'){ e.preventDefault(); validarBtn.click(); }
-  });
+  try{
+    const data = await loadInvitados();
+    const registro = data[code];
+    if(!registro){ msgEl.textContent = 'Código no válido. Revisa tu invitación o escríbenos.'; return; }
+    renderForm(code, registro);
+  }catch(err){
+    console.error(err);
+    msgEl.textContent = 'No pudimos cargar la lista de invitados. Revisa que el archivo “invitados.json” esté publicado en la misma carpeta de esta página o ajusta la ruta.';
+  }
 });
+
+// Enter para validar
+document.getElementById('codigoInput').addEventListener('keydown', e=>{
+  if(e.key === 'Enter'){ e.preventDefault(); document.getElementById('validarBtn').click(); }
+});
+
+
+
 </script>
-
-
-
-
-
-
-
 
 
 
