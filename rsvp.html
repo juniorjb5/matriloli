@@ -46,7 +46,8 @@
 
     <!-- FORM RSVP (Netlify Forms) -->
     <div id="formBox" class="rsvp-wrap" style="display:none;">
-      <form name="rsvp"
+      <form id="rsvpForm"
+      name="rsvp"
       method="POST"
       netlify
       data-netlify="true"
@@ -55,15 +56,13 @@
 
   <!-- Clave para Netlify -->
   <input type="hidden" name="form-name" value="rsvp">
-  <p style="display:none">
-    <label>No completar: <input name="bot-field"></label>
-  </p>
+  <input type="hidden" name="name" id="titleField"> <!-- <- ESTE define el “título” en Netlify -->
+  <p style="display:none"><label>No completar: <input name="bot-field"></label></p>
 
-  <!-- Código de invitación -->
+<!-- Código de invitación -->
   <input type="hidden" name="codigo" id="codigoHidden">
 
   <h2 class="heading _2-copy" id="titulo">Invitación</h2>
-
   <div id="personas"></div>
 
   <label class="field-label-4">¿Tienes alguna restricción alimentaria o un mensaje para nosotros?</label>
@@ -74,6 +73,8 @@
     <a href="/" class="confirm-alt">Volver al inicio</a>
   </div>
 </form>
+
+
 
     </div>
   </div>
@@ -90,33 +91,26 @@ async function loadInvitados(){
   return invitadosCache;
 }
 
-function renderForm(codigo, registro){
-  // Oculta gate, muestra form
-  document.getElementById('gate').style.display = 'none';
-  const box = document.getElementById('formBox');
-  box.style.display = 'block';
 
-  // Título y código
+
+
+function renderForm(codigo, registro){
+  document.getElementById('gate').style.display = 'none';
+  const box = document.getElementById('formBox'); box.style.display = 'block';
+
   document.getElementById('titulo').textContent = `Invitación ${codigo}`;
   document.getElementById('codigoHidden').value = codigo;
+  document.getElementById('titleField').value = `Invitación ${codigo}`; // <- NUEVO
 
-  // Personas
   const cont = document.getElementById('personas');
   cont.innerHTML = '';
-
   (registro.nombres || []).forEach((nom, i)=>{
     const wrap = document.createElement('fieldset');
     wrap.className = 'person';
     wrap.innerHTML = `
       <legend>${nom}</legend>
-      <label>
-        <input type="radio" name="asiste_${i}" value="${nom}|SI" required>
-        Asiste
-      </label>
-      <label>
-        <input type="radio" name="asiste_${i}" value="${nom}|NO">
-        No asiste
-      </label>
+      <label><input type="radio" name="asiste_${i}" value="${nom}|SI" required> Asiste</label>
+      <label><input type="radio" name="asiste_${i}" value="${nom}|NO"> No asiste</label>
       <div class="person-error" aria-live="polite" style="display:none; color:#9b3b3b; margin-top:6px; font-family:'Cormorant Garamond', serif;">
         Debes seleccionar una opción.
       </div>
@@ -130,47 +124,51 @@ function renderForm(codigo, registro){
 
 
 
-// Validación antes de enviar: todos deben estar marcados
+
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('rsvpForm');
   if(!form) return;
 
   form.addEventListener('submit', (e) => {
+    // Validación visual (como ya la tenías)
     let firstMissing = null;
-
     document.querySelectorAll('#personas fieldset.person').forEach((fs) => {
       const checked = fs.querySelector('input[type="radio"]:checked');
       const err = fs.querySelector('.person-error');
-
-      if(!checked){
-        if(err) err.style.display = 'block';
-        if(!firstMissing) firstMissing = fs;
-      }else{
-        if(err) err.style.display = 'none';
-      }
+      if(!checked){ if(err) err.style.display = 'block'; if(!firstMissing) firstMissing = fs; }
+      else{ if(err) err.style.display = 'none'; }
     });
-
     if(firstMissing){
-      e.preventDefault();               // no envía
+      e.preventDefault();
       firstMissing.scrollIntoView({behavior:'smooth', block:'center'});
-      // Opcional: resaltar
       firstMissing.style.boxShadow = '0 0 0 2px rgba(155,59,59,.25)';
       setTimeout(()=> firstMissing.style.boxShadow = '', 1200);
+      return;
     }
-  });
 
-  // Al cambiar, ocultar el error
-  document.getElementById('personas').addEventListener('change', (ev)=>{
-    const fs = ev.target.closest('fieldset.person');
-    if(!fs) return;
-    const err = fs.querySelector('.person-error');
-    if(err) err.style.display = 'none';
+    // Limpia sintéticos previos
+    form.querySelectorAll('input.synth-field').forEach(n => n.remove());
+
+    // Crea un hidden por cada persona con el valor elegido (SI/NO)
+    document.querySelectorAll('#personas fieldset.person').forEach((fs, i) => {
+      const nombre = (fs.querySelector('legend')?.textContent || `Invitado ${i+1}`).trim();
+      const marcado = fs.querySelector('input[type="radio"]:checked');
+      const hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = `asiste_${i}`;
+      hidden.value = `${nombre}|${marcado.value.endsWith('SI') ? 'SI' : 'NO'}`;
+      hidden.className = 'synth-field';
+      form.appendChild(hidden);
+    });
   });
 });
+</script>
 
 
 
 
+<script>
 
 document.getElementById('validarBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('msg'); msg.textContent = '';
@@ -204,6 +202,7 @@ document.getElementById('codigoInput').addEventListener('keydown', e=>{
 <!-- Formulario oculto para que Netlify detecte los campos -->
 <form name="rsvp" netlify data-netlify="true" hidden>
   <input type="hidden" name="form-name" value="rsvp">
+  <input type="text" name="name">
   <input type="text" name="codigo">
   <input type="text" name="asiste_0">
   <textarea name="comentarios"></textarea>
