@@ -1,0 +1,122 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Confirmación de asistencia — O&O</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="css/normalize.css" rel="stylesheet" />
+  <link href="css/webflow.css" rel="stylesheet" />
+  <link href="css/andreina-felipe.webflow.css" rel="stylesheet" />
+  <style>
+    /* mini estilos locales para el gate */
+    .gate-card{
+      max-width: 560px; margin: 8vh auto 4vh; padding: 28px 24px;
+      background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.08); text-align:center;
+    }
+    .gate-input{
+      width:100%; border:none; border-bottom:1px solid var(--cafe); background:transparent;
+      padding:10px 6px; color:var(--cafe); font-family:"The Youngest Serif Display", serif; font-size:18px;
+    }
+    .hint{ color:#8e8a7c; font-family:"Cormorant Garamond", serif; font-size:14px; margin:6px 0 0;}
+    .err{ color:#9b3b3b; margin-top:10px; font-size:14px; font-family:"Cormorant Garamond", serif;}
+    .rsvp-wrap{ max-width:720px; margin: 5vh auto 10vh; }
+    .person{ border:1px solid rgba(0,0,0,.08); border-radius:10px; padding:12px 14px; margin:10px 0; background:#fff; }
+    .person legend{ font-family:"The Youngest Serif Display", serif; color:var(--cafe); font-size:16px; padding:0 6px; }
+    .person label{ margin-right:14px; font-family:"Cormorant Garamond", serif; color:var(--cafe); }
+    .note{ width:100%; min-height:90px; border:1px solid rgba(0,0,0,.12); border-radius:10px; padding:10px; font-family:"Cormorant Garamond", serif; }
+  </style>
+</head>
+<body>
+
+<section class="section _5">
+  <div class="container _3">
+    <h1 class="heading _2-copy">Confirmación de asistencia</h1>
+    <p class="paragraph-2 _1">Ingresa el <strong>código</strong> de tu invitación para continuar.</p>
+
+    <!-- GATE -->
+    <div id="gate" class="gate-card">
+      <input id="codigoInput" class="gate-input" placeholder="Ej: OO-026" autocomplete="one-time-code" />
+      <p class="hint">El código está impreso en tu invitación.</p>
+      <a id="validarBtn" class="w-button cta-button" style="margin-top:16px; display:inline-block; cursor:pointer;">Validar código</a>
+      <div id="msg" class="err" role="alert" aria-live="polite"></div>
+    </div>
+
+    <!-- FORM RSVP (Netlify Forms) -->
+    <div id="formBox" class="rsvp-wrap" style="display:none;">
+      <form name="rsvp" method="POST" netlify data-netlify="true" class="form-block" id="rsvpForm">
+        <input type="hidden" name="codigo" id="codigoHidden" />
+
+        <h2 class="heading _2-copy" id="titulo">Invitación</h2>
+        <div id="personas"></div>
+
+        <label class="field-label-4">¿Tienes alguna restricción alimentaria o un mensaje para nosotros?</label>
+        <textarea class="note" name="comentarios" placeholder="Cuéntanos aquí"></textarea>
+
+        <div class="div-block-72">
+          <button type="submit" class="w-button cta-button">Enviar confirmación</button>
+          <a href="/" class="confirm-alt">Volver al inicio</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+let invitadosCache = null;
+
+// Carga el JSON de invitados (ajusta la ruta si lo pones en /images/)
+async function loadInvitados(){
+  if(!invitadosCache){
+    invitadosCache = await fetch('/invitados.json', {cache:'no-store'}).then(r=>r.json());
+  }
+  return invitadosCache;
+}
+
+function renderForm(codigo, registro){
+  // Oculta gate, muestra form
+  document.getElementById('gate').style.display = 'none';
+  const box = document.getElementById('formBox');
+  box.style.display = 'block';
+
+  // Título y código
+  document.getElementById('titulo').textContent = `Invitación ${codigo}`;
+  document.getElementById('codigoHidden').value = codigo;
+
+  // Personas
+  const cont = document.getElementById('personas');
+  cont.innerHTML = '';
+  (registro.nombres || []).forEach((nom, i)=>{
+    const wrap = document.createElement('fieldset');
+    wrap.className = 'person';
+    wrap.innerHTML = `
+      <legend>${nom}</legend>
+      <label><input type="radio" name="asiste_${i}" value="${nom}|SI" required> Asiste</label>
+      <label><input type="radio" name="asiste_${i}" value="${nom}|NO"> No asiste</label>
+    `;
+    cont.appendChild(wrap);
+  });
+}
+
+document.getElementById('validarBtn').addEventListener('click', async ()=>{
+  const msg = document.getElementById('msg'); msg.textContent = '';
+  const code = document.getElementById('codigoInput').value.trim().toUpperCase();
+  if(!code){ msg.textContent = 'Por favor, ingresa tu código.'; return; }
+
+  const data = await loadInvitados();
+  const registro = data[code];
+  if(!registro){ msg.textContent = 'Código no válido. Revisa tu invitación o escríbenos.'; return; }
+
+  renderForm(code, registro);
+});
+
+// Accesibilidad: Enter en el input valida
+document.getElementById('codigoInput').addEventListener('keydown', e=>{
+  if(e.key === 'Enter'){ e.preventDefault(); document.getElementById('validarBtn').click(); }
+});
+</script>
+
+</body>
+</html>
