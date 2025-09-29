@@ -103,17 +103,74 @@ function renderForm(codigo, registro){
   // Personas
   const cont = document.getElementById('personas');
   cont.innerHTML = '';
+
   (registro.nombres || []).forEach((nom, i)=>{
     const wrap = document.createElement('fieldset');
     wrap.className = 'person';
     wrap.innerHTML = `
       <legend>${nom}</legend>
-      <label><input type="radio" name="asiste_${i}" value="${nom}|SI" required> Asiste</label>
-      <label><input type="radio" name="asiste_${i}" value="${nom}|NO"> No asiste</label>
+      <label>
+        <input type="radio" name="asiste_${i}" value="${nom}|SI" required>
+        Asiste
+      </label>
+      <label>
+        <input type="radio" name="asiste_${i}" value="${nom}|NO">
+        No asiste
+      </label>
+      <div class="person-error" aria-live="polite" style="display:none; color:#9b3b3b; margin-top:6px; font-family:'Cormorant Garamond', serif;">
+        Debes seleccionar una opción.
+      </div>
     `;
     cont.appendChild(wrap);
   });
 }
+
+
+
+
+
+
+// Validación antes de enviar: todos deben estar marcados
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('rsvpForm');
+  if(!form) return;
+
+  form.addEventListener('submit', (e) => {
+    let firstMissing = null;
+
+    document.querySelectorAll('#personas fieldset.person').forEach((fs) => {
+      const checked = fs.querySelector('input[type="radio"]:checked');
+      const err = fs.querySelector('.person-error');
+
+      if(!checked){
+        if(err) err.style.display = 'block';
+        if(!firstMissing) firstMissing = fs;
+      }else{
+        if(err) err.style.display = 'none';
+      }
+    });
+
+    if(firstMissing){
+      e.preventDefault();               // no envía
+      firstMissing.scrollIntoView({behavior:'smooth', block:'center'});
+      // Opcional: resaltar
+      firstMissing.style.boxShadow = '0 0 0 2px rgba(155,59,59,.25)';
+      setTimeout(()=> firstMissing.style.boxShadow = '', 1200);
+    }
+  });
+
+  // Al cambiar, ocultar el error
+  document.getElementById('personas').addEventListener('change', (ev)=>{
+    const fs = ev.target.closest('fieldset.person');
+    if(!fs) return;
+    const err = fs.querySelector('.person-error');
+    if(err) err.style.display = 'none';
+  });
+});
+
+
+
+
 
 document.getElementById('validarBtn').addEventListener('click', async ()=>{
   const msg = document.getElementById('msg'); msg.textContent = '';
