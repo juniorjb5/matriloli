@@ -40,7 +40,10 @@
     <div id="gate" class="gate-card">
       <input id="codigoInput" class="gate-input" placeholder="Ej: OO-026" autocomplete="one-time-code" />
       <p class="hint">El código está impreso en tu invitación.</p>
-      <a id="validarBtn" class="w-button cta-button" style="margin-top:16px; display:inline-block; cursor:pointer;">Validar código</a>
+      <button id="validarBtn" type="button" class="w-button cta-button" style="margin-top:16px;">
+  Validar código
+</button>
+
       <div id="msg" class="err" role="alert" aria-live="polite"></div>
     </div>
 
@@ -169,24 +172,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const validarBtn = document.getElementById('validarBtn');
+  const codigoInput = document.getElementById('codigoInput');
+  const msg = document.getElementById('msg');
 
-document.getElementById('validarBtn').addEventListener('click', async ()=>{
-  const msg = document.getElementById('msg'); msg.textContent = '';
-  const code = document.getElementById('codigoInput').value.trim().toUpperCase();
-  if(!code){ msg.textContent = 'Por favor, ingresa tu código.'; return; }
+  if (!validarBtn || !codigoInput) return; // por si algo no está en el DOM
 
-  const data = await loadInvitados();
-  const registro = data[code];
-  if(!registro){ msg.textContent = 'Código no válido. Revisa tu invitación o escríbenos.'; return; }
+  validarBtn.addEventListener('click', async (ev) => {
+    ev.preventDefault();           // por si el navegador intenta navegar
+    msg.textContent = '';
 
-  renderForm(code, registro);
-});
+    try{
+      const code = codigoInput.value.trim().toUpperCase();
+      if(!code){ msg.textContent = 'Por favor, ingresa tu código.'; return; }
 
-// Accesibilidad: Enter en el input valida
-document.getElementById('codigoInput').addEventListener('keydown', e=>{
-  if(e.key === 'Enter'){ e.preventDefault(); document.getElementById('validarBtn').click(); }
+      const data = await loadInvitados();  // usa tu misma función
+      const registro = data[code];
+
+      if(!registro){
+        msg.textContent = 'Código no válido. Revisa tu invitación o escríbenos.';
+        return;
+      }
+
+      renderForm(code, registro);
+    }catch(err){
+      console.error(err);
+      msg.textContent = 'Hubo un problema validando el código. Intenta de nuevo.';
+    }
+  });
+
+  // Enter valida
+  codigoInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); validarBtn.click(); }
+  });
 });
 </script>
+
 
 
 
