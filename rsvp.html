@@ -23,8 +23,17 @@
     .hint{ color:#8e8a7c; font-family:"Cormorant Garamond", serif; font-size:14px; margin:6px 0 0;}
     .err{ color:#9b3b3b; margin-top:10px; font-size:14px; font-family:"Cormorant Garamond", serif;}
     .rsvp-wrap{ max-width:720px; margin: 5vh auto 10vh; }
-    .person{ border:1px solid rgba(0,0,0,.08); border-radius:10px; padding:12px 14px; margin:10px 0; background:#fff; }
-    .person legend{ font-family:"The Youngest Serif Display", serif; color:var(--cafe); font-size:16px; padding:0 6px; }
+    .person{ position:relative; background:#fff; border:1px solid rgba(0,0,0,.12); border-radius:10px; padding:16px; }
+.person legend{
+  display:block;             /* el nombre entra al flujo de la caja */
+  position:relative;
+  background:#fff;           /* tapa el borde detrás */
+  margin:0 0 8px;
+  padding:0 6px;
+  font-family:"The Youngest Serif Display",serif;
+  color:var(--cafe); font-size:16px;
+}
+
     .person label{ margin-right:14px; font-family:"Cormorant Garamond", serif; color:var(--cafe); }
     .note{ width:100%; min-height:90px; border:1px solid rgba(0,0,0,.12); border-radius:10px; padding:10px; font-family:"Cormorant Garamond", serif; }
   </style>
@@ -106,7 +115,7 @@
   <h2 class="heading _2-copy" id="titulo">Invitación</h2>
   <div id="personas"></div>
 
-  <label class="field-label-4">¿Tienes alguna restricción alimentaria o un mensaje para nosotros?</label>
+  <label class="field-label-4">¿Alguno de los asistentes tiene alguna restricción alimentaria? Dejanos un mensaje</label>
   <textarea class="note" name="comentarios" placeholder="Cuéntanos aquí"></textarea>
 
   <div class="div-block-72">
