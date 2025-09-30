@@ -1,5 +1,362 @@
 {
-  "OO-001": { "nombres": ["Oriana Landa", "Orlando Joaqui"] },
-  "OO-026": { "nombres": ["María Fernanda", "Juan Camilo", "Valeria"] },
-  "OO-041": { "nombres": ["Tía Ana"] }
+  "EAR-01": {
+    "nombres": [
+      "Hernando",
+      "Olga"
+    ]
+  },
+  "EOR-02": {
+    "nombres": [
+      "Hernando",
+      "Daniela",
+      "Hernandito"
+    ]
+  },
+  "EAB-03": {
+    "nombres": [
+      "Sebastián",
+      "Angie",
+      "Ivanna"
+    ]
+  },
+  "RNL-04": {
+    "nombres": [
+      "Orlando",
+      "Yazmin"
+    ]
+  },
+  "USC-05": {
+    "nombres": [
+      "Euclides",
+      "Elenis"
+    ]
+  },
+  "UAC-06": {
+    "nombres": [
+      "Euclides (Pibe)",
+      "Mayra",
+      "Anthonella",
+      "Amaia"
+    ]
+  },
+  "ERN-07": {
+    "nombres": [
+      "Jennifer"
+    ]
+  },
+  "TYE-08": {
+    "nombres": [
+      "Stefanny",
+      "Hugo"
+    ]
+  },
+  "AAR-09": {
+    "nombres": [
+      "Carlos",
+      "Isaura"
+    ]
+  },
+  "NEA-10": {
+    "nombres": [
+      "Ana María",
+      "Sebastián",
+      "Dulce"
+    ]
+  },
+  "ANT-11": {
+    "nombres": [
+      "Caterin"
+    ]
+  },
+  "LEK-12": {
+    "nombres": [
+      "Elkin",
+      "Elkin Leonardo",
+      "Jackeline"
+    ]
+  },
+  "ANG-13": {
+    "nombres": [
+      "Dagoberto",
+      "Beatriz",
+      "Donovan"
+    ]
+  },
+  "INL-14": {
+    "nombres": [
+      "Wilson",
+      "Yeimy",
+      "Carolain"
+    ]
+  },
+  "IYA-15": {
+    "nombres": [
+      "Tia Mery"
+    ]
+  },
+  "SRT-16": {
+    "nombres": [
+      "Ester"
+    ]
+  },
+  "OAG-17": {
+    "nombres": [
+      "Roger",
+      "Diana",
+      "Juan Pablo",
+      "Natalia"
+    ]
+  },
+  "AEU-18": {
+    "nombres": [
+      "Mauricio",
+      "Leidy",
+      "Maria José"
+    ]
+  },
+  "DAE-19": {
+    "nombres": [
+      "Adela",
+      "Jhon",
+      "Sara"
+    ]
+  },
+  "ULZ-20": {
+    "nombres": [
+      "Luz Mila",
+      "Miguel"
+    ]
+  },
+  "AAR-21": {
+    "nombres": [
+      "Maria Lucía"
+    ]
+  },
+  "NAA-22": {
+    "nombres": [
+      "Ana Lucía"
+    ]
+  },
+  "OES-23": {
+    "nombres": [
+      "Josué"
+    ]
+  },
+  "EYL-24": {
+    "nombres": [
+      "Nelly"
+    ]
+  },
+  "EDC-25": {
+    "nombres": [
+      "Cecilia",
+      "David"
+    ]
+  },
+  "IAX-26": {
+    "nombres": [
+      "Sixta"
+    ]
+  },
+  "AAR-27": {
+    "nombres": [
+      "Carlos",
+      "Yenny",
+      "Daniel",
+      "Yuliana"
+    ]
+  },
+  "NOT-28": {
+    "nombres": [
+      "Antonio"
+    ]
+  },
+  "LWI-29": {
+    "nombres": [
+      "Elizabeth",
+      "Matthew"
+    ]
+  },
+  "TOE-30": {
+    "nombres": [
+      "Stella",
+      "Ramiro"
+    ]
+  },
+  "AAN-31": {
+    "nombres": [
+      "Daniela"
+    ]
+  },
+  "ILE-32": {
+    "nombres": [
+      "Diego",
+      "Geral"
+    ]
+  },
+  "ANM-33": {
+    "nombres": [
+      "Ramón"
+    ]
+  },
+  "OOC-34": {
+    "nombres": [
+      "Socorro"
+    ]
+  },
+  "AAN-35": {
+    "nombres": [
+      "Sandra"
+    ]
+  },
+  "UNA-36": {
+    "nombres": [
+      "Juan Sebastián"
+    ]
+  },
+  "AAR-37": {
+    "nombres": [
+      "Mario",
+      "Marcela"
+    ]
+  },
+  "AAT-38": {
+    "nombres": [
+      "Natalia",
+      "Isabella"
+    ]
+  },
+  "MOP-39": {
+    "nombres": [
+      "Amparo"
+    ]
+  },
+  "EAL-40": {
+    "nombres": [
+      "Felipe",
+      "Hija"
+    ]
+  },
+  "RYE-41": {
+    "nombres": [
+      "Fredy"
+    ]
+  },
+  "SNC-42": {
+    "nombres": [
+      "Oscar Walduin"
+    ]
+  },
+  "RII-43": {
+    "nombres": [
+      "Cristian",
+      "Jacqui"
+    ]
+  },
+  "NID-44": {
+    "nombres": [
+      "Andres",
+      "Yurani"
+    ]
+  },
+  "OES-45": {
+    "nombres": [
+      "Jose"
+    ]
+  },
+  "ENI-46": {
+    "nombres": [
+      "Jeison"
+    ]
+  },
+  "EAB-47": {
+    "nombres": [
+      "Sebastián",
+      "Daniela"
+    ]
+  },
+  "EOS-48": {
+    "nombres": [
+      "Yessenia",
+      "Camilo"
+    ]
+  },
+  "OAN-49": {
+    "nombres": [
+      "Jonathan",
+      "Carolina"
+    ]
+  },
+  "RAO-50": {
+    "nombres": [
+      "Prof. Diego",
+      "Sra. Ximena"
+    ]
+  },
+  "TSE-51": {
+    "nombres": [
+      "Stephanie",
+      "Nicolas"
+    ]
+  },
+  "ILM-52": {
+    "nombres": [
+      "Jimena",
+      "Daniel"
+    ]
+  },
+  "LEE-53": {
+    "nombres": [
+      "Alejandra",
+      "Jorge"
+    ]
+  },
+  "INN-54": {
+    "nombres": [
+      "Cindy",
+      "Brian"
+    ]
+  },
+  "EYR-55": {
+    "nombres": [
+      "Mery"
+    ]
+  },
+  "EAS-56": {
+    "nombres": [
+      "Jessica"
+    ]
+  },
+  "OYL-57": {
+    "nombres": [
+      "Yoly"
+    ]
+  },
+  "AAL-58": {
+    "nombres": [
+      "Valeria"
+    ]
+  },
+  "IXO-59": {
+    "nombres": [
+      "Giovanny",
+      "XXXXXXX"
+    ]
+  },
+  "AAN-60": {
+    "nombres": [
+      "Daniela"
+    ]
+  },
+  "AYT-61": {
+    "nombres": [
+      "Nataly"
+    ]
+  },
+  "OIT-62": {
+    "nombres": [
+      "Jota",
+      "Ori"
+    ]
+  }
 }
