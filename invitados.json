@@ -33,7 +33,7 @@
   },
   "UAC-06": {
     "nombres": [
-      "Euclides (Pibe)",
+      "Euclides",
       "Mayra",
       "Anthonella",
       "Amaia"
@@ -44,9 +44,10 @@
       "Jennifer"
     ]
   },
-  "TYE-08": {
+  "TOE-08": {
     "nombres": [
-      "Stefanny"
+      "Stefanny",
+      "Hugo"
     ]
   },
   "AAR-09": {
@@ -88,9 +89,9 @@
       "Carolain"
     ]
   },
-  "IYA-15": {
+  "EAR-15": {
     "nombres": [
-      "Tia Mery"
+      "Mery Rivera"
     ]
   },
   "SRT-16": {
@@ -219,143 +220,132 @@
       "Marcela"
     ]
   },
-  "AAT-38": {
+  "MAP-38": {
     "nombres": [
+      "Amparo",
       "Natalia",
       "Isabella"
     ]
   },
-  "MOP-39": {
+  "RYE-39": {
     "nombres": [
-      "Amparo"
+      "Freedy"
     ]
   },
-  "EAL-40": {
-    "nombres": [
-      "Felipe",
-      "Hija"
-    ]
-  },
-  "RYE-41": {
-    "nombres": [
-      "Fredy"
-    ]
-  },
-  "SNC-42": {
+  "SNC-40": {
     "nombres": [
       "Oscar Walduin"
     ]
   },
-  "RII-43": {
+  "RII-41": {
     "nombres": [
       "Cristian",
       "Jacqui"
     ]
   },
-  "NID-44": {
+  "NYD-42": {
     "nombres": [
       "Andres",
-      "Yurani"
+      "Yurany"
     ]
   },
-  "OES-45": {
+  "OES-43": {
     "nombres": [
       "Jose"
     ]
   },
-  "EAB-47": {
+  "EAB-44": {
     "nombres": [
       "Sebastián",
       "Daniela"
     ]
   },
-  "EOS-48": {
+  "EOS-45": {
     "nombres": [
       "Yessenia",
       "Camilo"
     ]
   },
-  "OAN-49": {
+  "OAN-46": {
     "nombres": [
       "Jonathan",
       "Carolina"
     ]
   },
-  "RAO-50": {
+  "RAO-47": {
     "nombres": [
       "Prof. Diego",
       "Sra. Ximena"
     ]
   },
-  "TSE-51": {
+  "TSE-48": {
     "nombres": [
       "Stephanie",
       "Nicolas"
     ]
   },
-  "ILM-52": {
+  "ILM-49": {
     "nombres": [
       "Jimena",
       "Daniel"
     ]
   },
-  "LEE-53": {
+  "LEE-50": {
     "nombres": [
       "Alejandra",
       "Jorge"
     ]
   },
-  "INN-54": {
+  "INN-51": {
     "nombres": [
       "Cindy",
       "Brian"
     ]
   },
-  "EYR-55": {
+  "EYR-52": {
     "nombres": [
       "Mery"
     ]
   },
-  "EAS-56": {
+  "EAS-53": {
     "nombres": [
       "Jessica"
     ]
   },
-  "OYL-57": {
+  "OYR-54": {
     "nombres": [
-      "Yoly"
+      "Yorleidy"
     ]
   },
-  "AAL-58": {
+  "AAL-55": {
     "nombres": [
       "Valeria"
     ]
   },
-  "IXO-59": {
+  "IAO-56": {
     "nombres": [
       "Giovanny",
-      "XXXXXXX"
+      "Zaira"
     ]
   },
-  "AAN-60": {
+  "AGR-57": {
     "nombres": [
-      "Daniela",
-      "Carlos"
+      "Darling"
     ]
   },
-  "AYT-61": {
+  "ANT-58": {
     "nombres": [
       "Nataly",
       "Hernán"
     ]
   },
-  "OIT-62": {
+  "OIT-59": {
     "nombres": [
       "Jota",
       "Ori"
     ]
   },
-   "OYR-63": {
+   "AAM-60": {
     "nombres": [
       "Jorge",
       "Nancy",
@@ -363,7 +353,7 @@
       "Wesley"
     ]
   },
-  "AOR-64": {
+  "AAM-61": {
     "nombres": [
       "Carlos",
       "Ana",
@@ -372,27 +362,33 @@
       "Fabricio"
     ]
   },
-  "ENR-65": {
+  "AAM-62": {
     "nombres": [
       "Fernando",
       "Ana",
       "Yoselin"
     ]
   },
-  "AAR-66": {
+  "AAR-63": {
     "nombres": [
       "Marilda",
       "Maria Fernanda"
     ]
   },
-  "AYR-67": {
+  "AYR-64": {
     "nombres": [
       "Mary"
     ]
   },
-  "AAO-68": {
+  "AAO-65": {
     "nombres": [
       "Paola"
+    ]
+  },
+  "EAL-66": {
+    "nombres": [
+      "Felipe",
+      "Emilly"
     ]
   }
 }
