@@ -1,0 +1,300 @@
+---
+title: "Dashboard de la Boda — Versión Sencilla"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(shiny)
+library(readxl)
+library(dplyr)
+library(stringr)
+library(plotly)
+library(reactable)
+
+# === NOTA CLAVE ===
+# Para evitar errores de ruta, este tablero permite:
+# 1) Subir el archivo Invitados.xlsx (recomendado), o
+# 2) Si el archivo está junto al .Rmd, lo toma automáticamente.
+
+# Este helper solo DEFINE la función; no lee nada aún.
+```
+
+
+
+
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+
+### Cargar archivo
+
+```{r}
+fileInput("archivo", "Sube tu archivo Invitados.xlsx", accept = c(".xlsx"))
+```
+
+### Listado a mostrar
+
+```{r}
+radioButtons("estado_tabla", NULL, inline = TRUE,
+             choices = c("Pendientes" = "PENDIENTE", "Cancelados" = "NO", "Confirmados" = "SI"),
+             selected = "PENDIENTE")
+```
+
+
+Row {data-height=120}
+-----------------------------------------------------------------------
+
+### Confirmados
+
+```{r}
+# Cargar datos dentro del consumidor reactivo (este chunk)
+if (!is.null(input$archivo)) {
+  d0 <- readxl::read_excel(input$archivo$datapath)
+} else if (file.exists("Invitados.xlsx")) {
+  d0 <- readxl::read_excel("Invitados.xlsx")
+} else {
+  d0 <- tibble::tibble(
+    `No`=1:4, Codigo=c("X-01","X-01","X-02","X-02"), `Invitado de`=c("Jota","Jota","Ori","Ori"),
+    Edad=c("Adulto","Adulto","Adulto","Niño"), Ciudad=c("Cali","Lima","Cali","Lima"),
+    Parentezco=c("Familia","Familia","Amigos","Amigos"), Invitados=c("Hernando","Olga","Pepe","Lola"),
+    Sexo=c("M","F","M","F"), `Confirmación`=c("SI",NA,"NO",NA)
+  )
+}
+
+d <- d0 %>% transmute(
+  invitado_de   = dplyr::coalesce(`Invitado de`, Invitado_de),
+  ciudad        = Ciudad,
+  parentezco    = Parentezco,
+  invitado      = dplyr::coalesce(Invitados, Nombre),
+  sexo          = Sexo,
+  confirmacion  = toupper(as.character(dplyr::coalesce(`Confirmación`, Confirmacion)))
+) %>% mutate(
+  confirmacion = dplyr::case_when(
+    is.na(confirmacion) | confirmacion == "" ~ "PENDIENTE",
+    stringr::str_detect(confirmacion, "^S") ~ "SI",
+    stringr::str_detect(confirmacion, "^N") ~ "NO",
+    TRUE ~ confirmacion
+  )
+)
+
+confirmados <- sum(d$confirmacion == "SI", na.rm = TRUE)
+pendientes  <- sum(d$confirmacion == "PENDIENTE", na.rm = TRUE)
+cancelados  <- sum(d$confirmacion == "NO", na.rm = TRUE)
+
+total <- nrow(d)
+pct_conf <- ifelse(total>0, confirmados/total, 0)
+valueBox(confirmados, caption = paste0("Confirmados (", scales::percent(pct_conf), ")"), icon = "fa-heart", color = "success")
+```
+
+### Pendientes
+
+```{r}
+if (!is.null(input$archivo)) {
+  d0 <- readxl::read_excel(input$archivo$datapath)
+} else if (file.exists("Invitados.xlsx")) {
+  d0 <- readxl::read_excel("Invitados.xlsx")
+} else {
+  d0 <- tibble::tibble(
+    `No`=1:4, Codigo=c("X-01","X-01","X-02","X-02"), `Invitado de`=c("Jota","Jota","Ori","Ori"),
+    Edad=c("Adulto","Adulto","Adulto","Niño"), Ciudad=c("Cali","Lima","Cali","Lima"),
+    Parentezco=c("Familia","Familia","Amigos","Amigos"), Invitados=c("Hernando","Olga","Pepe","Lola"),
+    Sexo=c("M","F","M","F"), `Confirmación`=c("SI",NA,"NO",NA)
+  )
+}
+
+d <- d0 %>% transmute(
+  confirmacion  = toupper(as.character(dplyr::coalesce(`Confirmación`, Confirmacion)))
+) %>% mutate(
+  confirmacion = dplyr::case_when(
+    is.na(confirmacion) | confirmacion == "" ~ "PENDIENTE",
+    stringr::str_detect(confirmacion, "^S") ~ "SI",
+    stringr::str_detect(confirmacion, "^N") ~ "NO",
+    TRUE ~ confirmacion
+  )
+)
+
+pendientes  <- sum(d$confirmacion == "PENDIENTE", na.rm = TRUE)
+pct_pend <- ifelse(nrow(d)>0, pendientes/nrow(d), 0)
+valueBox(pendientes, caption = paste0("Pendientes (", scales::percent(pct_pend), ")"), icon = "fa-hourglass-half", color = "warning")
+```
+
+### Cancelados
+
+```{r}
+if (!is.null(input$archivo)) {
+  d0 <- readxl::read_excel(input$archivo$datapath)
+} else if (file.exists("Invitados.xlsx")) {
+  d0 <- readxl::read_excel("Invitados.xlsx")
+} else {
+  d0 <- tibble::tibble(
+    `No`=1:4, Codigo=c("X-01","X-01","X-02","X-02"), `Invitado de`=c("Jota","Jota","Ori","Ori"),
+    Edad=c("Adulto","Adulto","Adulto","Niño"), Ciudad=c("Cali","Lima","Cali","Lima"),
+    Parentezco=c("Familia","Familia","Amigos","Amigos"), Invitados=c("Hernando","Olga","Pepe","Lola"),
+    Sexo=c("M","F","M","F"), `Confirmación`=c("SI",NA,"NO",NA)
+  )
+}
+
+d <- d0 %>% transmute(
+  confirmacion  = toupper(as.character(dplyr::coalesce(`Confirmación`, Confirmacion)))
+) %>% mutate(
+  confirmacion = dplyr::case_when(
+    is.na(confirmacion) | confirmacion == "" ~ "PENDIENTE",
+    stringr::str_detect(confirmacion, "^S") ~ "SI",
+    stringr::str_detect(confirmacion, "^N") ~ "NO",
+    TRUE ~ confirmacion
+  )
+)
+
+cancelados  <- sum(d$confirmacion == "NO", na.rm = TRUE)
+pct_canc <- ifelse(nrow(d)>0, cancelados/nrow(d), 0)
+valueBox(cancelados, caption = paste0("Cancelados (", scales::percent(pct_canc), ")"), icon = "fa-times", color = "danger")
+```
+
+Row
+-----------------------------------------------------------------------
+
+### Procedencia por ciudad (apilado por estado) {data-width=60}
+
+```{r}
+if (!is.null(input$archivo)) {
+  d0 <- readxl::read_excel(input$archivo$datapath)
+} else if (file.exists("Invitados.xlsx")) {
+  d0 <- readxl::read_excel("Invitados.xlsx")
+} else {
+  d0 <- tibble::tibble(
+    `No`=1:4, Codigo=c("X-01","X-01","X-02","X-02"), `Invitado de`=c("Jota","Jota","Ori","Ori"),
+    Edad=c("Adulto","Adulto","Adulto","Niño"), Ciudad=c("Cali","Lima","Cali","Lima"),
+    Parentezco=c("Familia","Familia","Amigos","Amigos"), Invitados=c("Hernando","Olga","Pepe","Lola"),
+    Sexo=c("M","F","M","F"), `Confirmación`=c("SI",NA,"NO",NA)
+  )
+}
+
+d <- d0 %>% transmute(
+  ciudad        = Ciudad,
+  confirmacion  = toupper(as.character(dplyr::coalesce(`Confirmación`, Confirmacion)))
+) %>% mutate(
+  confirmacion = dplyr::case_when(
+    is.na(confirmacion) | confirmacion == "" ~ "PENDIENTE",
+    stringr::str_detect(confirmacion, "^S") ~ "SI",
+    stringr::str_detect(confirmacion, "^N") ~ "NO",
+    TRUE ~ confirmacion
+  )
+)
+
+por_ciudad <- d %>% count(ciudad, confirmacion, name = "n")
+plot_ly(por_ciudad, x = ~n, y = ~reorder(ciudad, n), color = ~confirmacion,
+        colors = c("NO" = "#EF4444", "PENDIENTE" = "#F59E0B", "SI" = "#10B981"),
+        type = "bar", orientation = "h") %>%
+  layout(barmode = "stack", xaxis = list(title = "Personas"), yaxis = list(title = "Ciudad"))
+```{r}
+d <- get_df()
+por_ciudad <- d %>% count(ciudad, confirmacion, name = "n")
+
+plot_ly(por_ciudad, x = ~n, y = ~reorder(ciudad, n), color = ~confirmacion,
+        colors = c("NO" = "#EF4444", "PENDIENTE" = "#F59E0B", "SI" = "#10B981"),
+        type = "bar", orientation = "h") %>%
+  layout(barmode = "stack", xaxis = list(title = "Personas"), yaxis = list(title = "Ciudad"))
+```
+
+### Confirmación × Invitado de {data-width=40}
+
+```{r}
+if (!is.null(input$archivo)) {
+  d0 <- readxl::read_excel(input$archivo$datapath)
+} else if (file.exists("Invitados.xlsx")) {
+  d0 <- readxl::read_excel("Invitados.xlsx")
+} else {
+  d0 <- tibble::tibble(
+    `No`=1:4, Codigo=c("X-01","X-01","X-02","X-02"), `Invitado de`=c("Jota","Jota","Ori","Ori"),
+    Edad=c("Adulto","Adulto","Adulto","Niño"), Ciudad=c("Cali","Lima","Cali","Lima"),
+    Parentezco=c("Familia","Familia","Amigos","Amigos"), Invitados=c("Hernando","Olga","Pepe","Lola"),
+    Sexo=c("M","F","M","F"), `Confirmación`=c("SI",NA,"NO",NA)
+  )
+}
+
+d <- d0 %>% transmute(
+  invitado_de   = dplyr::coalesce(`Invitado de`, Invitado_de),
+  confirmacion  = toupper(as.character(dplyr::coalesce(`Confirmación`, Confirmacion)))
+) %>% mutate(
+  confirmacion = dplyr::case_when(
+    is.na(confirmacion) | confirmacion == "" ~ "PENDIENTE",
+    stringr::str_detect(confirmacion, "^S") ~ "SI",
+    stringr::str_detect(confirmacion, "^N") ~ "NO",
+    TRUE ~ confirmacion
+  )
+)
+
+por_invitado_de <- d %>% count(invitado_de, confirmacion, name = "n")
+plot_ly(por_invitado_de, x = ~invitado_de, y = ~n, color = ~confirmacion,
+        colors = c("NO" = "#EF4444", "PENDIENTE" = "#F59E0B", "SI" = "#10B981"),
+        type = "bar") %>%
+  layout(barmode = "stack", xaxis = list(title = "Invitado de"), yaxis = list(title = "Personas"))
+```{r}
+d <- get_df()
+por_invitado_de <- d %>% count(invitado_de, confirmacion, name = "n")
+
+plot_ly(por_invitado_de, x = ~invitado_de, y = ~n, color = ~confirmacion,
+        colors = c("NO" = "#EF4444", "PENDIENTE" = "#F59E0B", "SI" = "#10B981"),
+        type = "bar") %>%
+  layout(barmode = "stack", xaxis = list(title = "Invitado de"), yaxis = list(title = "Personas"))
+```
+
+Row
+-----------------------------------------------------------------------
+
+### Listado según estado seleccionado
+
+```{r}
+if (!is.null(input$archivo)) {
+  d0 <- readxl::read_excel(input$archivo$datapath)
+} else if (file.exists("Invitados.xlsx")) {
+  d0 <- readxl::read_excel("Invitados.xlsx")
+} else {
+  d0 <- tibble::tibble(
+    `No`=1:4, Codigo=c("X-01","X-01","X-02","X-02"), `Invitado de`=c("Jota","Jota","Ori","Ori"),
+    Edad=c("Adulto","Adulto","Adulto","Niño"), Ciudad=c("Cali","Lima","Cali","Lima"),
+    Parentezco=c("Familia","Familia","Amigos","Amigos"), Invitados=c("Hernando","Olga","Pepe","Lola"),
+    Sexo=c("M","F","M","F"), `Confirmación`=c("SI",NA,"NO",NA)
+  )
+}
+
+d <- d0 %>% transmute(
+  invitado      = dplyr::coalesce(Invitados, Nombre),
+  ciudad        = Ciudad,
+  invitado_de   = dplyr::coalesce(`Invitado de`, Invitado_de),
+  parentezco    = Parentezco,
+  sexo          = Sexo,
+  confirmacion  = toupper(as.character(dplyr::coalesce(`Confirmación`, Confirmacion)))
+) %>% mutate(
+  confirmacion = dplyr::case_when(
+    is.na(confirmacion) | confirmacion == "" ~ "PENDIENTE",
+    stringr::str_detect(confirmacion, "^S") ~ "SI",
+    stringr::str_detect(confirmacion, "^N") ~ "NO",
+    TRUE ~ confirmacion
+  )
+) %>% filter(confirmacion == input$estado_tabla)
+
+reactable(d %>% select(invitado, ciudad, invitado_de, parentezco, sexo),
+          searchable = TRUE, pagination = TRUE, defaultPageSize = 10,
+          bordered = TRUE, highlight = TRUE)
+```{r}
+d <- get_df() %>% filter(confirmacion == input$estado_tabla) %>%
+  select(invitado, ciudad, invitado_de, parentezco, sexo)
+
+reactable(d, searchable = TRUE, pagination = TRUE, defaultPageSize = 10,
+          bordered = TRUE, highlight = TRUE)
+```
+
+Row
+-----------------------------------------------------------------------
+
+### Instrucciones
+
+- **Lo más simple posible**: sube el Excel o ponlo junto al `.Rmd` con nombre **Invitados.xlsx**.
+- Sin filtros avanzados ni reactividad compleja: todo se recalcula automáticamente.
+- Si ves datos de ejemplo, significa que no se encontró el Excel ni se cargó archivo.
+

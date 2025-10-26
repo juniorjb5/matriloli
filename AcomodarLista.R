@@ -8,7 +8,7 @@ library(tidyr)
 library(stringr)
 
 # 1) Importa (ajusta la ruta/encoding si hace falta)
-df <- read_csv("rsvp (2).csv", locale = locale(encoding = "UTF-8"))
+df <- read_csv("rsvp_15_10.csv", locale = locale(encoding = "UTF-8"))
 
 # 2) Pivotea a long tomando solo columnas asiste_*
 #    y preserva Codigo y Comentario si existen (si el nombre varía, cámbialo aquí)
@@ -46,4 +46,5 @@ View(clean)
 
 
 # 8) (Opcional) guardar la base limpia
-write_csv(clean, "rsvp_limpio.csv")
+library(writexl)
+write_xlsx(clean, "rsvp_limpio_15_10.xlsx")
