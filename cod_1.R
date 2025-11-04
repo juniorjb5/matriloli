@@ -22,7 +22,7 @@ servr::httw(".")          # sirve la carpeta actual
 
 git add .
 
-git commit -m "26_10_2025_1"
+git commit -m "02_11_2025_1"
 
 git push origin main
 

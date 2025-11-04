@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Encuentra tu mesa</title>
+
+<link href="/andreina/css/normalize.css" rel="stylesheet">
+<link href="/andreina/css/webflow.css" rel="stylesheet">
+<link href="/andreina/css/andreina-felipe.webflow.css" rel="stylesheet">
+<link href="/andreina/css/main.css" rel="stylesheet">
+
+<style>
+  :root{ --cafe:#86796a; --texto:#6a5747; }
+  body{
+    margin:0; font-family:"Cormorant Garamond", serif; color:var(--texto);
+    background:url('/images/12.png') no-repeat center center fixed;  /* fondo visible */
+    background-size:cover;
+  }
+  .seat-wrap{ min-height:70vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:36px 16px; text-align:center; }
+  h1{ margin:0 0 8px; font-size:2.2rem; color:var(--cafe); }
+  .seat-hint{ opacity:.8; margin-bottom:14px }
+
+  .seat-search{ width:min(760px, 92vw); position:relative; margin:0 auto; }
+  .seat-input{
+    width:100%; padding:16px 20px; border-radius:999px; border:1px solid rgba(0,0,0,.12);
+    font-size:1.05rem; outline:none; background:#fff; box-shadow:0 6px 18px rgba(0,0,0,.12);
+  }
+  .seat-dd{
+    position:absolute; left:0; right:0; top:calc(100% + 8px);
+    background:#fff; border:1px solid rgba(0,0,0,.1); border-radius:14px;
+    box-shadow:0 18px 34px rgba(0,0,0,.18);
+    z-index: 99999; max-height:320px; overflow:auto; display:none;
+  }
+  .seat-item{ padding:14px 16px; cursor:pointer; text-align:left; }
+  .seat-item:hover, .seat-item.active{ background:rgba(134,121,106,.08); }
+  .seat-name{ font-weight:600 }
+
+  /* Resultado final centrado y “recordable” */
+  .seat-result{
+    margin-top:22px; display:flex; flex-direction:column; align-items:center; gap:6px; min-height:90px;
+  }
+  .r-nombre{ font-weight:700; font-size:1.25rem; color:var(--cafe); }
+  .r-mesa{
+    font-weight:800; font-size:2.2rem; letter-spacing:.5px; color:#3b4e57;
+    line-height:1.2; text-transform:uppercase; 
+  }
+  
+  /* activa cuando se selecciona un nombre */
+.seat-result.flash .r-nombre { animation: fadeUp .9s ease both; }
+.seat-result.flash .r-mesa   { animation: pop .9s ease both; }
+
+/* keyframes */
+@keyframes pop {
+  0%   { transform: scale(.96); filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+  50%  { transform: scale(1.06); }
+  100% { transform: scale(1);    }
+}
+@keyframes fadeUp {
+  0%   { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0);   }
+}
+  
+  
+  
+  
+</style>
+</head>
+<body>
+  <main class="seat-wrap">
+    <h1>Encuentra tu mesa</h1>
+<p class="seat-hint">
+  <h3>Busca tu nombre y descubre dónde comienza tu celebración.<br><br></h3>
+  Las mesas son solo el punto de partida...<br> luego deja que la noche te lleve entre risas, brindis y buena energía.
+</p>
+
+    <div class="seat-search" id="seatSearch">
+      <input id="seatQ" class="seat-input" type="text" placeholder="Ej. Orlando Joaqui" autocomplete="off" aria-label="Buscar tu mesa">
+      <div id="seatDD" class="seat-dd"></div>
+    </div>
+
+    <div id="seatRes" class="seat-result" aria-live="polite"></div>
+  </main>
+
+  <script>
+  // === Ajusta si es necesario:
+  // Si index.html y asientos.json están en /mesas/:
+  const DATA_URL = '/mesas/asientos.json';
+  // o si están en la misma carpeta, usa: const DATA_URL = 'asientos.json';
+
+  const norm = s => (s||'').toString()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/\s+/g,' ').trim().toLowerCase();
+  const esc = s => (s??'').toString()
+    .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+    .replaceAll('"','&quot;').replaceAll("'","&#039;");
+
+  const $q   = document.getElementById('seatQ');
+  const $dd  = document.getElementById('seatDD');
+  const $res = document.getElementById('seatRes');
+  const $box = document.getElementById('seatSearch');
+
+  let data=[], view=[], idxActive=-1;
+
+  async function loadData(){
+    const res = await fetch(DATA_URL, {cache:'no-store'});
+    const json = await res.json();
+    data = (Array.isArray(json)?json:Object.values(json)).map(r=>{
+      const nombre = r.nombre ?? r.nombres ?? r.Name ?? '';
+      return { ...r, nombre, _k: norm(nombre) };
+    });
+  }
+
+  function render(list){
+    if(!list.length){ $dd.style.display='none'; $dd.innerHTML=''; idxActive=-1; return; }
+    $dd.innerHTML = list.map((r,i)=>`
+      <div class="seat-item${i===idxActive?' active':''}" data-i="${i}">
+        <span class="seat-name">${esc(r.nombre)}</span>
+      </div>
+    `).join('');
+    $dd.style.display='block';
+  }
+
+  function onType(){
+    const q = norm($q.value);
+    if(!q){ render([]); $res.innerHTML=''; return; }
+    view = data.filter(r => r._k.includes(q)).slice(0,30);
+    render(view);
+  }
+
+  function choose(i){
+    const r = view[i]; if(!r) return;
+    // limpiar input para que no quede "Ferna"
+    $q.value = '';
+    render([]);
+    // resultado final centrado (sin silla)
+    $res.innerHTML = `
+      ✨<div class="r-nombre">${esc(r.nombre)}</div>
+      <div class="r-mesa">Mesa ${esc(r.mesa)}</div>
+    `;
+  }
+
+// dispara la animación cada vez
+$res.classList.remove('flash');
+void $res.offsetWidth; // reflow para reiniciar animación
+$res.classList.add('flash');
+
+  // Eventos
+  $q.addEventListener('input', onType);
+  $q.addEventListener('keydown', e=>{
+    const open = $dd.style.display==='block';
+    if(!open && e.key==='Enter'){ onType(); if(view.length){ idxActive=0; choose(0); } e.preventDefault(); return; }
+    if(!open && e.key==='ArrowDown'){ onType(); return; }
+    if(!open) return;
+
+    const max = view.length || 1;
+    if(e.key==='ArrowDown'){ idxActive=(idxActive+1)%max; render(view); e.preventDefault(); }
+    if(e.key==='ArrowUp'){ idxActive=(idxActive-1+max)%max; render(view); e.preventDefault(); }
+    if(e.key==='Enter'){ if(idxActive<0) idxActive=0; choose(idxActive); e.preventDefault(); }
+    if(e.key==='Escape'){ render([]); }
+  });
+
+  $dd.addEventListener('click', e=>{
+    const el = e.target.closest('.seat-item'); if(!el) return;
+    choose(parseInt(el.dataset.i,10));
+  });
+
+  document.addEventListener('click', e=>{
+    if(!$box.contains(e.target)) render([]);
+  });
+
+  loadData();
+  </script>
+</body>
+</html>
+
